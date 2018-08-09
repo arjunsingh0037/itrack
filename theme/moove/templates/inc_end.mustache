@@ -1,0 +1,41 @@
+
+        <section id="sidepre-blocks" data-region="blocks-column" class="hidden-print">
+            <div class="search-row">
+                <input type="text" placeholder="Search" class="form-control">
+            </div>
+            {{{ sidepreblocks }}}
+        </section>
+ 
+
+    {{#hasdrawertoggle}}
+        {{> theme_moove/nav-drawer }}
+    {{/hasdrawertoggle}}
+</div><!-- Ends .page-wrapper -->
+
+{{> theme_moove/footer }}
+
+</body>
+</html>
+{{#js}}
+require(['theme_boost/loader']);
+require(['theme_boost/drawer'], function(mod) {
+    mod.init();
+});
+
+require([], function() {
+    var iconsearch = document.querySelector('.moove-search-input .icon-magnifier');
+    var btnclosesearch = document.querySelector('.search-input-form .close-search');
+    var searchinputform = document.querySelector('.moove-search-input');
+
+    if (iconsearch) {
+
+        var togglesearchinputform = function() {
+            searchinputform.classList.toggle('expanded');
+        }
+
+        iconsearch.onclick = togglesearchinputform;
+        btnclosesearch.onclick = togglesearchinputform;
+    }
+});
+
+{{/js}}

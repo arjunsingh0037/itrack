@@ -1,0 +1,16 @@
+#page-local-bs_badge_ladder-index span.fullnameself {
+    font-weight: bold;
+}
+
+#page-admin-local-bs_badge_ladder-about .about-box {
+    margin-top: 50px;
+}
+
+#page-admin-local-bs_badge_ladder-about .about-text,
+#page-admin-local-bs_badge_ladder-about .donation-text {
+    margin-bottom: 12px;
+}
+
+#page-admin-local-bs_badge_ladder-about .donation-button {
+    margin-bottom: 8px;
+}

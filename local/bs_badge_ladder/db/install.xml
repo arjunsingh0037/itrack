@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/bs_badge_ladder/db" VERSION="20150621" COMMENT="XMLDB file for Moodle local/bs_badge_ladder"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_badge_ladder" COMMENT="Stores information for course badge ladders">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" NEXT="status" PREVIOUS="id"/>
+		<FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" NEXT="anonymize" PREVIOUS="courseid"/>
+		<FIELD NAME="anonymize" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" NEXT="perpage" PREVIOUS="status"/>
+		<FIELD NAME="perpage" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="anonymize"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

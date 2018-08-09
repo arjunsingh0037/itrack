@@ -1,0 +1,81 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_moove/header
+
+    Page header template
+
+    Example context (json): {}
+}}
+<header role="banner" class="pos-f-t navbar navbar-full bg-faded navbar-static-top moodle-has-zindex">
+
+    <div class="container-fluid navbar-nav">
+
+        <a href="{{{ config.wwwroot }}}" class="navbar-brand {{# output.get_logo }}has-logo{{/ output.get_logo }}
+            {{^ output.get_logo }}
+                hidden-sm-down
+            {{/ output.get_logo }}
+                ">
+            {{# output.get_logo }}
+                <span class="logo hidden-sm-down">
+                    <img src="{{output.get_logo}}" alt="{{sitename}}">
+                </span>
+            {{/ output.get_logo }}
+            {{^ output.get_logo }}
+                <span class="site-name hidden-sm-down">{{{ sitename }}}</span>
+            {{/ output.get_logo }}
+        </a>
+
+        <ul class="navbar-nav navbar-custom-menu">
+            {{#hasdrawertoggle}}
+                <li data-region="drawer-toggle" class="nav-item drawer-toggle">
+                    <a
+                        href="javascript:void(0)"
+                        aria-expanded="{{#navdraweropen}}true{{/navdraweropen}}{{^navdraweropen}}false{{/navdraweropen}}"
+                        aria-controls="nav-drawer"
+                        class="sidebartoggler text-muted"
+                        data-action="toggle-drawer"
+                        data-side="left"
+                        data-preference="drawer-open-nav">
+                            <i class="icon-menu" aria-hidden="true"></i><span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+                    </a>
+                </li>
+            {{/hasdrawertoggle}}
+            <!-- custom_menu -->
+            {{{ output.custom_menu }}}
+            <!-- page_heading_menu -->
+            {{{ output.page_heading_menu }}}
+        </ul>
+
+        <ul class="navbar-nav popover-menu-items">
+            <li class="popover-region">
+                {{{ output.render_lang_menu }}}
+            </li>
+
+            <!-- navbar_plugin_output -->
+            {{{ output.navbar_plugin_output }}}
+
+            <!-- user_menu -->
+            {{{ output.user_menu }}}
+        </ul>
+
+        <!-- search_box -->
+        <span class="hidden-md-down">
+          {{{ output.search_box }}}
+        </span>
+    </div>
+</header>

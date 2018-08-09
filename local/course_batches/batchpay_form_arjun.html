@@ -1,0 +1,39 @@
+<div align="center">
+<?php
+    $paypalurl = empty($CFG->usepaypalsandbox) ? 'https://www.paypal.com/cgi-bin/webscr' : 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+?>
+<form action="<?php echo $paypalurl ?>" method="post">
+<input type="hidden" name="cmd" value="_xclick" />
+<input type="hidden" name="charset" value="utf-8" />
+
+<input type="hidden" name="business" value="<?php echo get_config('enrol_paypal','paypalbusiness');?>"/>
+<input type="hidden" name="item_name" value="<?php p($cbatch->name) ?>" />
+<input type="hidden" name="item_number" value="<?php p($cbatch->id) ?>" />
+<input type="hidden" name="quantity" value="1" />
+<input type="hidden" name="on0" value="<?php print_string('user') ?>" />
+<input type="hidden" name="os0" value="<?php p($userfullname) ?>" />
+<input type="hidden" name="custom" value="<?php echo $USER->id.','.$cbatch->id; ?>" />
+
+<!--<input type="text" name="currency_code" value="<?php p($instance->currency) ?>" />-->
+<input type="hidden" name="amount" value="<?php p($cbatch->discountcost) ?>" />
+<!--<input type="hidden" name="amount" value="0" />-->
+
+<input type="hidden" name="for_auction" value="false" />
+<input type="hidden" name="no_note" value="1" />
+<input type="hidden" name="no_shipping" value="1" />
+<input type="hidden" name="notify_url" value="<?php echo $CFG->wwwroot.'/local/course_batches/ipn.php' ?>" />
+<input type="hidden" name="return" value="<?php echo $CFG->wwwroot.'/local/course_batches/return.php?id='.$course->id;?>" />
+<input type="hidden" name="cancel_return" value="<?php echo $CFG->wwwroot.'/local/course_batches/return.php?id='.$course->id;?>" />
+<input type="hidden" name="rm" value="2" />
+<!--<input type="text" name="cbt" value="<?php print_string('continuetocourse') ?>" />-->
+
+<input type="hidden" name="first_name" value="<?php p($USER->firstname) ?>" />
+<input type="hidden" name="last_name" value="<?php p($USER->lastname) ?>" />
+<!--<input type="text" name="address" value="<?php p($USER->address) ?>" />-->
+<input type="hidden" name="city" value="<?php p($USER->city) ?>" />
+<input type="hidden" name="email" value="<?php p($USER->email) ?>" />
+<input type="hidden" name="country" value="<?php p($USER->country) ?>" />
+
+<input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Make Payment" />
+</form>
+</div>
