@@ -14,7 +14,7 @@ class academicbatch_tocourse_form extends moodleform {
         $semester = array();
         $batches = array();
         $program = array();
-        $programs = $DB->get_records('batches',array('creatorid'=>$USER->id,'batchtype'=>'ACAD'),'program');
+        $programs = $DB->get_records('program_stream',array(),'program');
         foreach ($programs as $prg) {
                 $program[$prg->program] = $prg->program;
         }

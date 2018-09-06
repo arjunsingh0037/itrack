@@ -10,7 +10,7 @@ class subscribed_batches_form extends moodleform {
 		$mform = & $this->_form;
 		$mform->addElement('header','filehdr', 'Subscribed Course Batch');
 		$courses = array();
-		if($DB->record_exists('course_type',array('creatorid'=>$USER->id,'subscribed'=>2))){
+		if($DB->record_exists('course_type',array('creatorid'=>$USER->id,'subscribed'=>1))){
             $subscribed_courses = $DB->get_records('course_type',array('creatorid'=>$USER->id,'subscribed'=>1),'courseid');
             foreach ($subscribed_courses as $scourses){
             	$course = $DB->get_record('course',array('id'=>$scourses->courseid),'id,fullname');

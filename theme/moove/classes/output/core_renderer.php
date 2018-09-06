@@ -742,8 +742,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             <button class="accordion"><i class="fa fa-language"></i><span class="text">Project Management</span></button>
                             <div class="panel">
                                 <ul>
-                                    <li><a href="#">&#128902;  All Projects</a></li>
-                                    <li><a href="#">&#128902;  Project Attributes</a></li>
+                                    <li><a href="'.$CFG->wwwroot.'/local/eProjects/approved.php">&#128902;  All Projects</a></li>
+                                    <li><a href="'.$CFG->wwwroot.'/local/eProjects/project-attr.php">&#128902;  Project Attributes</a></li>
                                 </ul>
                             </div>
                             <button class="accordion"><i class="fa fa-keyboard-o"></i><span class="text">Coupons</span></button>
@@ -957,14 +957,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             </div>';
         }
         if($prof_permission[3] == 1){
+
+            $manage_component = $CFG->wwwroot.'/local/eProjects/add_component.php';
+            $manage_project = $CFG->wwwroot.'/local/eProjects/add_project.php';
+            $project_request = $CFG->wwwroot.'/local/eProjects/request.php';
+            $evaluate_project = $CFG->wwwroot.'/local/eProjects/evaluate.php';
             $sidebar_professors .='<button class="accordion"><i class="fa fa-code-fork"></i><span class="text">Project Management</span></button>
                             <div class="panel">
                                 <ul>
-                                    <li><a href="#">&#128902;  My Projects</a></li>
-                                    <li><a href="#">&#128902;  Manage Group</a></li>
-                                    <li><a href="#">&#128902;  Assign Group</a></li>
-                                    <li><a href="#">&#128902;  Search Projects</a></li>
-                                    <li><a href="#">&#128902;  Access Peers</a></li>
+                                    <li><a href="'.$manage_component.'">&#128902;  Manage Component</a></li>
+                                    <li><a href="'.$manage_project.'">&#128902;  Manage Project</a></li>
+                                    <li><a href="'.$project_request.'">&#128902;  Project Request</a></li>
+                                    <li><a href="'.$evaluate_project.'">&#128902;  Evaluate Project</a></li>
                                 </ul>
                             </div>';
         }
@@ -1049,9 +1053,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                                 <div class="panel">
                                     <ul>
                                         <li><a href="#">&#128902;  My Projects</a></li>
-                                        <li><a href="#">&#128902;  Manage Group</a></li>
-                                        <li><a href="#">&#128902;  Assign Group</a></li>
-                                        <li><a href="#">&#128902;  Search Projects</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eProjects/group.php">&#128902;  Manage Group</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eProjects/grouplist.php">&#128902;  Assign Group</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eProjects/search-project.php">&#128902;  Search Projects</a></li>
                                         <li><a href="#">&#128902;  Access Peers</a></li>
                                     </ul>
                                 </div>';

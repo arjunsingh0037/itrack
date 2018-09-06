@@ -171,16 +171,37 @@ echo '<div class="panel panel-default">
 				$insert_sb->enddate = $subscribed_data->batchend;
 				$insert_sb->batchlimit = $subscribed_data->batchlimit;
 				$insert_sb->timecreated = time();
-
-			    $creadted_sb = $DB->insert_record('batches',$insert_sb); 
+				$creadted_sb = $DB->insert_record('batches',$insert_sb); 
 			}
 			$subscribed_mform->set_data($newobj);
 			$subscribed_mform->display();
 	echo '</div>';
 	if(isset($creadted_sb)) {
-			echo '<div id="batchsuccess">';
-    		echo $OUTPUT->notification('Subscribed Batch Created','notifysuccess');
-    		echo '</div>';
+			$batch_obj = $DB->get_record('batches',array('id'=>$creadted_sb));
+			$sub_batch_to_course = new stdClass();
+			$sub_batch_to_course->createdby = $USER->id;
+			$sub_batch_to_course->batchid = $creadted_sb;
+			$sub_batch_to_course->timecreated = time();
+			$sub_batch_to_course->courseid = $batch_obj->course;
+            $sub_batch_to_course->migrated = 0;
+            $tocourse_sub = $DB->insert_record('course_batches',$sub_batch_to_course);
+			if($tocourse_sub){
+				$courses = array($batch_obj->course);
+				$professor_assigned = professor_coursebatch_enrolment($batch_obj->professor,$courses);
+				if($professor_assigned){
+					echo '<div id="batchsuccess">';
+		    		echo $OUTPUT->notification('Subscribed Batch Created','notifysuccess');
+		    		echo '</div>';
+				}else{
+					echo '<div id="batchsuccess1">';
+		    		echo $OUTPUT->notification('Error Assigning Batch To Professor','notifydanger');
+		    		echo '</div>';
+				}
+			}else{
+				echo '<div id="batchsuccess2">';
+	    		echo $OUTPUT->notification('Error Creating Batch','notifydanger');
+	    		echo '</div>';
+			}
 			//redirect($CFG->wwwroot . "/local/course_batches/batch.php",'Batch created');
 	}
   echo '</div>
@@ -199,6 +220,8 @@ echo $OUTPUT->footer();
 
     $('#id_public').click(function () {
     	$('#batchsuccess').hide();
+    	$('#batchsuccess1').hide();
+    	$('#batchsuccess2').hide();
         $('#academic_batch').hide('fast');
         $('#nonacademic_batch').show('fast');
 		$('#subscribed_batch').hide('fast');
@@ -210,6 +233,8 @@ echo $OUTPUT->footer();
 
     $('#id_private').click(function () {
     	$('#batchsuccess').hide();
+    	$('#batchsuccess1').hide();
+    	$('#batchsuccess2').hide();
         $('#academic_batch').show('fast');
         $('#nonacademic_batch').hide('fast');
 		$('#subscribed_batch').hide('fast');
@@ -222,6 +247,8 @@ echo $OUTPUT->footer();
 		
 	$('#id_subscribed').click(function () {
 		$('#batchsuccess').hide();
+		$('#batchsuccess1').hide();
+		$('#batchsuccess2').hide();
         $('#subscribed_batch').show('fast');
         $('#nonacademic_batch').hide('fast');
 		$('#academic_batch').hide('fast');

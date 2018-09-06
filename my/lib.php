@@ -250,14 +250,13 @@ function student_courselist($userid,$creatorid,$roleid){
                 </thead><tbody>';
                 foreach ($courses as $course) {
                     if($DB->record_exists('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>0))){
-                        $academic_courses = $DB->get_records('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>0));;
+                        $academic_courses = $DB->get_records('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>0));
                         $content .=usercourselist($roleid,$academic_courses,1);
-                    }else{
                         $flag = 1;
                     }
                 }
                 $content .= '</tbody></table>';
-                if($flag == 1){
+                if($flag != 1){
                     $content .= '<p class="nocourse">You do not  have any academic courses</p>'; 
                 }
                 $content .='</div>
@@ -277,12 +276,11 @@ function student_courselist($userid,$creatorid,$roleid){
                     if($DB->record_exists('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>1))){
                         $subscibed_courses = $DB->get_records('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>1));;
                         $content .=usercourselist($roleid,$subscibed_courses,2);
-                    }else{
                         $flag = 2;
                     }
                 }
                 $content .= '</tbody></table>';
-                if($flag == 2){
+                if($flag != 2){
                     $content .= '<p class="nocourse">You do not  have any subscribed industry courses</p>'; 
                 }
                 $content .= '</div><div class="tab-pane" id="3">';
@@ -301,13 +299,11 @@ function student_courselist($userid,$creatorid,$roleid){
                     if($DB->record_exists('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>2))){
                         $industry_courses = $DB->get_records('course_type',array('creatorid'=>$creatorid,'courseid'=>$course->id,'subscribed'=>2));;
                         $content .=usercourselist($roleid,$industry_courses,2);
-                    }else{
                         $flag = 3;
                     }
                 }
-                
                 $content .= '</tbody></table>';
-                if($flag == 3){
+                if($flag != 3){
                     $content .= '<p class="nocourse">You do not  have any industry partner courses</p>'; 
                 }
                 $content .= '</div></div>';

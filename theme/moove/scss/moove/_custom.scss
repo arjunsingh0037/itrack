@@ -607,4 +607,31 @@ a.txt-signup {
         padding: 10px;
     }
 }
-
+legend.ftoggler {
+    background: #212940;
+    padding: 14px;
+}
+.mform fieldset.collapsible legend a.fheader {
+    background: none;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.fcontainer.clearfix {
+    margin-left: 10px;
+}
+.panel-heading.listhead{
+ background-color:#212940!important;
+ color: #fff;
+ padding: 14px;
+ font-weight: bold;
+}
+header#page-header {
+    display: none;
+}
+body#page-course-view-topics{
+	header#page-header {
+	    display: initial!important;
+	}
+}

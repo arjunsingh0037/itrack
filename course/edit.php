@@ -184,7 +184,7 @@ if ($editform->is_cancelled()) {
         $course = create_course($data, $editoroptions);
         //arjun-adding course extra settings as in iTrack
         if($course){
-            //print_object($_POST);
+            //  print_object($_POST);
             $course_extrasettings = new stdClass();
             $course_extrasettings->courseid = $course->id;
             $course_extrasettings->subscribed = $data->subscribed;
