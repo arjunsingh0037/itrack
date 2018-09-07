@@ -250,4 +250,83 @@ function group_to_student(){
   echo $content;
 }
 
+function prof_project_requestlist(){
+    global $OUTPUT,$CFG,$DB,$PAGE,$USER;
+    $count = 0;
+    $content = '';
+    $msg = '';
+    $indi_projects = array();
+    $content.='<div id="exTab_request" class=""> 
+                    <ul class="nav nav-tabs nav-justified ">
+                        <li class="active">
+                            <a  href="#1" data-toggle="tab">INDIVIDUAL REQUEST</a>
+                        </li>
+                        <li>
+                            <a href="#2" data-toggle="tab">GROUP REQUEST</a>
+                        </li>
+                    </ul>';
 
+    if($DB->record_exists('project_request',array())){
+        $content .='<div class="tab-content ">
+                            <div class="tab-pane active" id="1">';
+                            if($DB->record_exists('project_request',array('type'=>'in'))){
+                              $individual_requests = $DB->get_records('project_request',array('type'=>'in'));
+                              foreach ($individual_requests as $kir => $vir) {
+                                $creator_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vir->projectid));
+                                if($creator_project){
+                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester); 
+                                }
+                              }
+                              $table = new html_table();
+                              $table->head  = array('Sl.no','Login','Name','Project', 'Student Details', 'Synopsis','Action');
+                              $table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
+                              $table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
+                              $table->attributes['class'] = 'admintable generaltable';
+                              $table->id = 'filterssetting';
+                              $data = array();
+                              $i = 1;
+                              foreach ($indi_projects as $ipval) {
+                                $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
+                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
+                                $line = array();
+                                $line[] = $i;
+                                $line[] = $requestedby->username;
+                                $line[] = $requestedby->firstname;
+                                $line[] = $project_obj->title;
+                                $line[] = '<button type="button" id="'.$ipval['requester'].'" onclick="view_single_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSingleStudentList">view</button>';
+                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
+
+                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="edit_component(this.id)" class="btn btn-info crslink edit_comp" data-toggle="modal" data-target="#showEditComponentForm">&#x270e;</button><button type="button" id="'.$ipval ['pid'].'" onclick="delete_component(this.id)" class="btn btn-info crslink delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">&#x1f5d1;</button>';
+                                $data[] = $line;
+                                $i++;
+                              }
+                              
+                              $table->data  = $data;      
+                              $content .=html_writer::table($table);
+                              
+                              //print_object($indi_projects);
+                                //$academic_batches = $DB->get_records('batches',array('creatorid'=>$userid,'batchtype'=>'ACAD'));;
+                                //$content .=batchlist_tables($academic_batches,'ACAD');
+
+                            }else{
+                                $msg = 'You do not have any academic batches'; 
+                                $content .= $OUTPUT->notification($msg,'notifysuccess');
+                            }
+                            $content .='</div>
+                            <div class="tab-pane" id="2">';
+                            if($DB->record_exists('project_request',array('type'=>'gp'))){
+                                //$nonacademic_batches = $DB->get_records('batches',array('creatorid'=>$userid,'batchtype'=>'NACAD'));
+                                //$content .=batchlist_tables($nonacademic_batches,'NACAD');
+
+                            }else{
+                                $msg = 'You do not have any non-academic batches'; 
+                                $content .= $OUTPUT->notification($msg,'notifysuccess');
+                            }
+                            $content .= '</div></div>';
+    }else{
+        $content .= 'No request to show';
+    }
+    $content .= '</div>';
+    //print_object($categories2);die();
+    echo $content;
+}

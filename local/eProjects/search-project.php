@@ -28,6 +28,8 @@ $currentuser = $USER->id;
 //     redirect($CFG->wwwroot.'/my','You do not have access to this page.',1,'error');
 //     die; 
 // }
+echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">';
 $addnewpromo='Search Projects';
 $PAGE->navbar->add($addnewpromo);
 $PAGE->set_title($addnewpromo);
@@ -52,10 +54,10 @@ if($stu_exists){
 $procat = array('gp'=>'Group','in'=>'Individual');
 //$search_form->set_data($newobj);
 //$search_form->display();
-echo '<div id="component_maplist" class="panel panel-default">
+echo '<div id="component_maplist" class="panel-default">
               <div class="panel-heading listhead">SEARCH PROJECTS</div>
               <div class="panel-body">
-                    <form class="form-horizontal" action="#">
+                    <form class="form-horizontal" id="searchform" onsubmit="return false">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-lg-6">
@@ -97,15 +99,7 @@ echo '<div id="component_maplist" class="panel panel-default">
                             </div>
                         <div id="domain_loader"></div>
                             <div id="group_div">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-lg-4 control-label">Select Group <span style="color:red;">*</span></label>
-                                        <div class="col-lg-8">
-                                        <select id="search_group" name="project_group" onchange="enable_submit();" class="form-control" required="">
-                                        </select>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div id="group_loader"></div>
                         </div>                            
@@ -118,10 +112,59 @@ echo '<div id="component_maplist" class="panel panel-default">
                 </form>
             </div>
         </div>';
+echo '<div class="loading"><div class="high-loader" id="loader"></div></div>';
 echo '<div id="search_projectlist"></div>';
+echo '<div class="modal fade" id="showSynopsis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel11" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-responsive">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel11">Synopsis Detail</h4>
+
+                    </div>
+                    <div id="delstu" class=""></div>
+                    <div id="synopsisdetails" class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>';
+
 echo $OUTPUT->footer();
 ?>
 <script type="text/javascript">
+    function view_synopsis(id){
+        $.ajax({
+            url: 'synopsisajax.php',
+            dataType: 'json',
+            type: 'get',
+            data: {projectid:id},
+            success:function(response){
+                  $("#synopsisdetails").html(response);
+            }
+        });
+    }
+    function send_request(id){
+        var grouptype = $("#gptype").val();
+        var gpid = $("#gpid").val();
+        $.ajax({
+            url: 'projectrequestajax.php',
+            dataType: 'json',
+            type: 'get',
+            data: {projectid:id,groupid:gpid,grouptype:grouptype},
+            success:function(response){
+                if(response.status == 1){
+                    //var msg = '<div class="alert alert-success" role="alert">Request sent successfully !!</div>'; 
+                    swal("Success!", "Request sent", "success");
+                    //$("#sentRequestDetail").html(msg);
+                }else{
+                    //var msg = '<div class="alert alert-danger" role="alert">Error sending request !!</div>'; 
+                    swal("Error!", "Request not sent", "error");
+                    //$("#sentRequestDetail").html(msg);
+                }
+                
+            }
+        });
+    }
     $(document).ready(function () {
         $("#enrol_stream").prepend("<option value='' disabled selected>Select Stream</option>");
         $("#enrol_domain").prepend("<option value='' disabled selected>Select Domain</option>");
@@ -151,37 +194,49 @@ echo $OUTPUT->footer();
         
         $("#search_category").change(function(){
             var gtype = $(this).val();
-            $.ajax({
-                url: 'searchprojectajax.php',
-                type: 'get',
-                data: {grouptype:gtype},
-                dataType: 'json',
-                success:function(response){
-                    var len = response.length;
-                    $("#search_group").empty();
-                    $("#search_group").prepend("<option value='' disabled selected>Select Group</option>");
-                    for( var i = 0; i<len; i++){
-                        var id = response[i]['id'];
-                        var gpname = response[i]['gpname'];
-                        $("#search_group").append("<option value='"+id+"'>"+gpname+"</option>");
+            if(gtype == 'gp'){
+                 $.ajax({
+                    url: 'searchprojectajax.php',
+                    type: 'get',
+                    data: {grouptype:gtype},
+                    dataType: 'json',
+                    success:function(response){
+                        var len = response.length;
+                        $("#search_group").empty();
+                        var cont = ' <div class="col-lg-6"><div class="form-group"><label class="col-lg-4 control-label">Select Group <span style="color:red;">*</span></label><div class="col-lg-8"><select id="search_group" name="project_group" class="form-control" required=""></select></div></div></div>';
+                        $("#group_div").html(cont);
+                        $("#search_group").prepend("<option value='' disabled selected>Select Group</option>");
+                        for( var i = 0; i<len; i++){
+                            var id = response[i]['id'];
+                            var gpname = response[i]['gpname'];
+                            $("#search_group").append("<option value='"+id+"'>"+gpname+"</option>");
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $("#group_div").html('');
+            }
         });
 
-        $("#searchprojectbtn").click(function(){
+        $("#searchform").submit(function(){
             var streamid = $("#enrol_stream").val();
             var domainid = $("#enrol_domain").val();
             var catid = $("#search_category").val();
-            var groupid = $("#search_group").val();
+            var gpid = $("#search_group").val();
+            if(!gpid){
+                gpid = 0;
+            }    
+            $('#loader').removeClass("hide-loader");
+            $('#loader').addClass("loader");
             $.ajax({
                 url: 'searchlistajax.php',
                 dataType: 'json',
                 type: 'get',
-                data: {streamid:streamid,domainid:domainid,catid:catid,groupid:groupid},
+                data: {streamid:streamid,domainid:domainid,catid:catid,gpid:gpid},
                 success:function(response){
                     function implode(){
-                      //$('#spinner1').css("display","none");
+                      $('#loader').removeClass("loader");
+                      $('#loader').addClass("high-loader");
                       $("#search_projectlist").html(response);
                     }
                     setTimeout(implode, 500);
