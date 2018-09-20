@@ -229,6 +229,46 @@ body.drawer-open-right {
         background-color: #62606b!important;
     }
 }
+.block_quickmail{
+    .card-block .card-title{
+        background: #f39d32;
+        color: #fff;
+        padding: 20px;
+        text-transform: uppercase;
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 0px!important;
+    }
+    .card-text{
+        padding: 10px;
+        background: #29282e;
+        color: #ffffff!important;
+    }
+    a {
+        color: #ffffff!important;
+        text-decoration: none;
+    }
+}
+.block_quickmailsms{
+    .card-block .card-title{
+        background: #52a75b;
+        color: #fff;
+        padding: 20px;
+        text-transform: uppercase;
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 0px!important;
+    }
+    .card-text{
+        padding: 10px;
+        background: #29282e;
+        color: #ffffff!important;
+    }
+    a {
+        color: #ffffff!important;
+        text-decoration: none;
+    }
+}
 .menubar{
     position: absolute;
     right: 40px;

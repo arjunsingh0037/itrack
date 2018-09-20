@@ -49,6 +49,7 @@ if ($navdraweropen) {
 if ($draweropenright && $hasblocks) {
     $extraclasses[] = 'drawer-open-right';
 }
+//echo $OUTPUT->blocks('side-post');
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $regionmainsettingsmenu = $OUTPUT->region_main_settings_menu();

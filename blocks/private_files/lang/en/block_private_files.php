@@ -23,7 +23,7 @@
  */
 
 $string['pluginname'] = 'Private files';
-$string['privatefiles'] = 'Private files';
+$string['privatefiles'] = 'DROPBOX';
 $string['private_files:addinstance'] = 'Add a new private files block';
 $string['private_files:myaddinstance'] = 'Add a new private files block to Dashboard';
 $string['privacy:metadata'] = 'The Private files block only provides a view of, and a link to, the user\'s private files.';

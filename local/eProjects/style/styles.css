@@ -205,3 +205,32 @@ display:none;
     text-transform: uppercase;
     text-align: center;
 }
+div#showGroupStudentList .modal-dialog{
+ max-width: fit-content;
+}
+.requestbtn {
+    font-size: 10px;
+    background-color: #218c21;
+    border-color: #218c21;
+    width: 87%;
+}
+.requestbtn1 {
+    font-size: 10px;
+    background-color: #ff4136;
+    border-color: #ff4136;
+    width: 87%;
+}
+.requestbtn2 {
+    font-size: 10px;
+    background-color: #218c21;
+    border-color: #218c21;
+    width: 30%;
+    float:left;
+}
+.requestbtn21 {
+    font-size: 10px;
+    background-color: #ff4136;
+    border-color: #ff4136;
+    width: 30%;
+    float:left;
+}

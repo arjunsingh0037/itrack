@@ -1,0 +1,71 @@
+#page-block-quickmailsms-admin_email div.region-content table.generaltable {
+   margin: 0 auto 30px auto;
+   width: 70%;
+}
+
+#page-block-quickmailsms div.region-content select.select, #page-block-quickmailsms div.region-content table.generaltable, #page-block-quickmailsms div.region-content div.generalbox {
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+#page-block-quickmailsms select[multiple] {
+   min-width: 250px;
+   max-width: 250px;
+}
+
+#page-block-quickmailsms .mform {
+}
+
+#page-block-quickmailsms .emailtable {
+    background-color: inherit;
+}
+
+#page-block-quickmailsms .emailtable .r1 .c0, .emailtable .r1 .c2 {
+    width: 275px;
+}
+
+#page-block-quickmailsms .object_labels {
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+#page-block-quickmailsms .emailtable .cell {
+    border: none;
+}
+
+#page-block-quickmailsms .emailtable .r0 .cell {
+    padding: .5em .5em .3em .5em;
+}
+
+#page-block-quickmailsms .emailtable .r1 .c1 {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#page-block-quickmailsms .emailtable .r1 .c2 div {
+    padding: 2px 0;
+}
+
+#page-block-quickmailsms .emailtable .r1 .c2, .emailtable .r0 .c1 {
+    text-align: right;
+}
+
+#page-block-quickmailsms .mform fieldset.hidden>div {
+   clear:both;
+   float:none;
+   position:center;
+   overflow:hidden;
+   min-width:900px;
+   width:100%;
+   text-align:left;
+   margin:auto;
+}
+
+#page-block-quickmailsms .mform #add_button, #remove_button, #add_all, #remove_all {
+   width: 100px;
+   height: 25px;
+}
+
+#page-block-quickmailsms .mform input#id_subject {
+  width: 75%;
+}

@@ -39,8 +39,7 @@
     .small-box p {
         z-index: 5;
         color: #fff;
-        font-size:17px;
-        width: 60%;
+        font-size:14px;
     }
 
     .small-box h3 {
@@ -57,13 +56,13 @@
         transition: all .3s linear;
         position: absolute;
         top: 10;
-        right: 45px;
+        right: 21px;
         z-index: 0;
-        font-size: 48px;
+        font-size: 35px;
         color: rgba(0, 0, 0, 0.15);
     }
     .small-box:hover .icon{
-        font-size: 75px;
-        right: 75px;
+        font-size: 50px;
+        right: 60px;
     }
 }

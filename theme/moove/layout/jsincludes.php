@@ -31,7 +31,7 @@ $course_array = array('abc','xyz','pqr');
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
 <script src="<?php echo $CFG->wwwroot.'/theme/moove/layout/includes/js/adminlte.min.js'?>"></script>
 
 <script type="text/javascript">
@@ -73,16 +73,29 @@ $course_array = array('abc','xyz','pqr');
           }
           return i;
     }
-
-
-    $('#sidepreopen-control').click(function () {
-            if($('header.navbar').hasClass('open-right')){
-                $('header.navbar').removeClass('open-right',1000);
-            }else{
-                $('header.navbar').addClass('open-right',1000);
-            }
+    //jquery for header sidebar toggle---starts
+    $(document).ready(function() {
+        $('body').addClass('drawer-open-left');
+        if($('body').hasClass('drawer-open-right')){
+            $('header.navbar').removeClass('cright',1000);
+            $('header.navbar').addClass('oright',1000);
+            
+        }
     });
-    
+    $('#sidepreopen-control').click(function () {
+        if($('body').hasClass('drawer-open-right')){
+            $('header.navbar').removeClass('open-right',1000);
+            $('header.navbar').addClass('close-right',1000);
+            $('header.navbar').removeClass('oright',1000);
+        
+        }else{
+            $('header.navbar').removeClass('close-right',1000);
+            $('header.navbar').addClass('open-right',1000);
+            $('header.navbar').removeClass('0right',1000);
+        }
+    });
+    //jquery for header sidebar toggle---ends
+
     //$('aside#block-region-side-pre .content').hide();
     $( ".card-title" ).append( "<span class='plus'>-</span>" );
     $('aside#block-region-side-pre .card-block').on('click', function(event) {
@@ -325,9 +338,9 @@ $('#projects_container').highcharts({
 });
 
 /*----- Dashboard Datatables------ */
-$(document).ready(function() {
+/*$(document).ready(function() {
     for (var i = 1; i >= 3; i++) {
         $('#example'+i).DataTable();
     }
-} );
+} );*/
 </script>

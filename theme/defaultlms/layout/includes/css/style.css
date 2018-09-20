@@ -155,7 +155,9 @@ a,a:hover,a:focus {
 }
 
 .leftside-navigation,.right-stat-bar{
+    top: 75;
     height: 100%;
+    position: relative;
 }
 
 .right-stat-bar ul {
@@ -339,11 +341,11 @@ ul.sidebar-menu li a.active i {
 
 }
 .brand {
-    background:#1fb5ad;
+    background:#f9f9f9;
     float:left;
     width:240px;
-    height:80px;
-    position:relative;
+    height:71px!important;
+    position:absolute!important;
 }
 a.logo {
     font-size:21px;

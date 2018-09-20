@@ -21,4 +21,48 @@
 
     Example context (json): {}
 }}
-{{output.left_menubar}}
+<div id="nav-drawer" data-region="drawer" class="hidden-print moodle-has-zindex nav-collapse" aria-hidden="" tabindex="-1">
+    <div class="container-fluid navbar-nav brand">
+        <a href="{{{ config.wwwroot }}}" class="navbar-brand {{# output.get_logo }}has-logo{{/ output.get_logo }}
+            {{^ output.get_logo }}
+                hidden-sm-down
+            {{/ output.get_logo }}
+                ">
+            {{# output.get_logo }}
+                <span class="logo hidden-sm-down">
+                    <img src="{{output.get_logo}}" alt="{{sitename}}">
+                </span>
+            {{/ output.get_logo }}
+            {{^ output.get_logo }}
+                <span class="site-name hidden-sm-down">{{{ sitename }}}</span>
+            {{/ output.get_logo }}
+        </a>
+
+        <ul class="navbar-nav navbar-custom-menu">
+            {{#hasdrawertoggle}}
+                <li data-region="drawer-toggle" class="nav-item drawer-toggle">
+                    <a
+                        href="javascript:void(0)"
+                        aria-expanded="{{#navdraweropen}}true{{/navdraweropen}}{{^navdraweropen}}false{{/navdraweropen}}"
+                        aria-controls="nav-drawer"
+                        class="sidebartoggler text-muted"
+                        data-action="toggle-drawer"
+                        data-side="left"
+                        data-preference="drawer-open-nav">
+                            <i class="fa fa-outdent fa-stack-1x" ></i>
+                            <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+                    </a>
+                </li>
+            {{/hasdrawertoggle}}
+            <!-- custom_menu -->
+            {{{ output.custom_menu }}}
+            <!-- page_heading_menu -->
+            {{{ output.page_heading_menu }}}
+        </ul>
+    </div>
+    <div class="leftside-navigation" tabindex="5000" style="outline: none;" id="style-1">
+        <ul class="sidebar-menu" id="nav-accordion">
+            {{{output.left_menubar}}}
+        </ul>
+    </div>
+</div>

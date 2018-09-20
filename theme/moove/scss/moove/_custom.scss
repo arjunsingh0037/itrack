@@ -1,9 +1,9 @@
 .brand {
-    background: #ffffff;
+    background: #f9f9f9;
     float: left;
     width: 240px;
-    height: 80px;
-    position: relative;
+    height: 71px;
+    position: absolute;
     padding-left: 0px;
 }
 a.navbar-brand.has-logo {
@@ -15,13 +15,13 @@ a.navbar-brand.has-logo {
 }
 ul.navbar-nav.navbar-custom-menu {
     float: left;
-    margin-top: 23px;
+    margin-top: 17px;
     margin-left: -15px;
-    background: #32d2c9;
+    background: #ffffff;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 39px;
+    height: 39px;
     position: absolute;
     right: -15px;
 }
@@ -34,8 +34,9 @@ header.navbar ul.navbar-nav li, header.navbar ul.navbar-nav .nav-item{
 a.sidebartoggler.text-muted {
     cursor: pointer;
     display: inline-block;
-    font-size: 15px;
+    font-size: 18px;
     padding: 9px 0px 0px 0px;
+    color: #da3e2d!important;
 }
 header.navbar ul.navbar-nav:hover {
     background: #f2f2f2;
@@ -344,15 +345,15 @@ a.txt-signup {
     text-align: left;
     outline: none;
     font-size: 12px;
-    transition: 0.4s;
+    position: relative;
+    display: -webkit-box;
 }
 
-#nav-drawer .active, .accordion:hover {
+#nav-drawer .active, #nav-drawer .accordion:hover {
     background-color: #32333a;
     color: #fff;
     width: 240px;
     border-left: 2px solid red;
-    margin-top: 1px;
 }
 
 #nav-drawer .accordion:after {
@@ -362,11 +363,14 @@ a.txt-signup {
     float: right;
     margin-left: 5px;
 }
-
+#nav-drawer .accordion:hover:after {
+  color: #fff;
+}
 #nav-drawer .active:after {
     content: "\2212";
     color: #fff;
 }
+
 #nav-drawer button.accordion i {
     font-size: 15px;
     padding-right: 6px;
@@ -374,9 +378,10 @@ a.txt-signup {
 #nav-drawer .panel {
     margin-bottom: 0px;
     border-radius:0px;
-    background-color: white;
+    background-color: transparent;
     max-height: 0;
     overflow: hidden;
+    width:240px;
     transition: max-height 0.2s ease-out;
 }
 #nav-drawer .panel ul {
@@ -634,4 +639,39 @@ body#page-course-view-topics{
 	header#page-header {
 	    display: initial!important;
 	}
+}
+.box-header.bg-light-blue.bg-light-blue-gradient{
+      background: #212940!important;
+
+}
+.box-header {
+    padding: 20px;
+}
+.box{
+    border-top: 0px!important;
+}
+h3.box-title {
+    color: #fff;
+    font-size: 14px!important;
+}
+.customicons{
+    font-size: 20px;
+    border-color: #000;
+    border-radius: 26px;
+    width: 37px;
+    height: 37px;
+    padding: 8px 0px 0px 8px;
+    background: #cddc39;
+}
+.nav-tabs-custom>.tab-content{
+  padding-top: 10px;
+  display: grid;
+}
+a.sidebartoggler .fa-stack-1x{
+  font-size: 25px!important;
+  font-weight: 400!important;
+  text-decoration: none;
+}
+a.sidebartoggler.text-muted:focus, a.sidebartoggler.text-muted:hover{
+  text-decoration:none;
 }

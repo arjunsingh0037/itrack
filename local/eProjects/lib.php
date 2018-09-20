@@ -274,7 +274,7 @@ function prof_project_requestlist(){
                               foreach ($individual_requests as $kir => $vir) {
                                 $creator_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vir->projectid));
                                 if($creator_project){
-                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester); 
+                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester,'id'=>$vir->id,'status'=>$vir->status); 
                                 }
                               }
                               $table = new html_table();
@@ -293,10 +293,16 @@ function prof_project_requestlist(){
                                 $line[] = $requestedby->username;
                                 $line[] = $requestedby->firstname;
                                 $line[] = $project_obj->title;
-                                $line[] = '<button type="button" id="'.$ipval['requester'].'" onclick="view_single_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSingleStudentList">view</button>';
+                                $line[] = '<button type="button" id="'.$ipval['pid'].'-'.$ipval['requester'].'" onclick="view_single_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSingleStudentList">view</button>';
                                 $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
 
-                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="edit_component(this.id)" class="btn btn-info crslink edit_comp" data-toggle="modal" data-target="#showEditComponentForm">&#x270e;</button><button type="button" id="'.$ipval ['pid'].'" onclick="delete_component(this.id)" class="btn btn-info crslink delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">&#x1f5d1;</button>';
+                                if($ipval['status'] == 0){
+                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($ipval['status'] == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
                                 $data[] = $line;
                                 $i++;
                               }
@@ -315,8 +321,241 @@ function prof_project_requestlist(){
                             $content .='</div>
                             <div class="tab-pane" id="2">';
                             if($DB->record_exists('project_request',array('type'=>'gp'))){
-                                //$nonacademic_batches = $DB->get_records('batches',array('creatorid'=>$userid,'batchtype'=>'NACAD'));
-                                //$content .=batchlist_tables($nonacademic_batches,'NACAD');
+                              $group_requests = $DB->get_records('project_request',array('type'=>'gp'));
+                              foreach ($group_requests as $kg => $vg) {
+                                $creatorgp_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vg->projectid));
+                                if($creatorgp_project){
+                                  $grp_projects[] = array('pid'=>$vg->projectid,'requester'=>$vg->requester,'groupid'=>$vg->groupid,'status'=>$vg->status,'id'=>$vg->id); 
+                                }
+                              }
+                              $table = new html_table();
+                              $table->head  = array('Sl.no','Team Lead Login','Team Lead Name','Group Name','No of Students','Project', 'Student Details', 'Synopsis','Group','Project');
+                              //$table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
+                              //$table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
+                              $table->attributes['class'] = 'admintable generaltable';
+                              $table->id = 'filterssetting';
+                              $data = array();
+                              $i = 1;
+                              $count = 0;
+                              foreach ($grp_projects as $ipval) {
+                                $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
+                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
+                                $group_obj = $DB->get_record('project_group',array('id'=>$ipval['groupid']),'id,groupname,status');
+                                $group_members = $DB->get_records('group_to_student',array('groupid'=>$ipval['groupid'],'createdby'=>$ipval['requester']),'id,studentid');
+                                $count = count($group_members);
+                                $count = $count + 1;
+                                $line = array();
+                                $line[] = $i;
+                                $line[] = $requestedby->username;
+                                $line[] = $requestedby->firstname;
+                                $line[] = $group_obj->groupname;
+                                $line[] = $count;
+                                $line[] = $project_obj->title;
+                                $line[] = '<button type="button" id="'.$ipval['groupid'].'" onclick="view_group_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showGroupStudentList">view</button>';
+                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
+                                if($group_obj->status == 0){
+                                  $line[] = '<button type="button" id="'.$group_obj->id.'" onclick="approve_group(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$group_obj->id.'" onclick="reject_group(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($group_obj->status == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
+                                if($ipval['status'] == 0){
+                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($ipval['status'] == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
+                                
+                                $data[] = $line;
+                                $i++;
+                              }
+                              
+                              $table->data  = $data;      
+                              $content .=html_writer::table($table);
+
+                            }else{
+                                $msg = 'You do not have any non-academic batches'; 
+                                $content .= $OUTPUT->notification($msg,'notifysuccess');
+                            }
+                            $content .= '</div></div>';
+    }else{
+        $content .= 'No request to show';
+    }
+    $content .= '</div>';
+    //print_object($categories2);die();
+    echo $content;
+}
+
+function get_mygroup_requestlist(){
+  global $CFG,$DB,$USER;
+  $content = '<div id="project_grouplist" class="panel panel-default">
+              <div class="panel-heading listhead">LIST OF NEW GROUP REQUESTS</div>
+              <div class="panel-body"></div>';
+  $table = new html_table();
+  $table->head  = array('Sl.no', 'Group Name', 'Status', 'Action');
+  $table->size  = array('10%', '20%', '20%', '30%');
+  $table->colclasses = array ('leftalign','leftalign','leftalign','centeralign');
+  $table->attributes['class'] = 'admintable generaltable';
+  $table->id = 'filterssetting';
+  $data = array();
+  $pgroups = $DB->get_records('group_to_student',array('studentid'=>$USER->id));
+  $flag = 0;
+  if($pgroups){
+    $i = 1;
+    foreach ($pgroups as $pv) {
+        if($pv->status == 0){
+          $status = 'Pending';
+          $action = '<button type="button" id="'.$pv->id.'" onclick="approve_group_request(this.id)" class="btn btn-info requestbtn2 edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$pv->id.'" onclick="reject_group_request(this.id)" class="btn btn-info requestbtn21 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+        }else if($pv->status == 1){
+          $status = 'Approved';
+          $action = '-';
+        }else{
+          $status = 'Declined';
+          $action = '-';
+        }
+        $gpname = $DB->get_record('project_group',array('id'=>$pv->groupid),'groupname');
+        $line = array();
+        $line[] = $i;
+        $line[] = $gpname->groupname;
+        $line[] = $status;
+        $line[] = $action;
+        $data[] = $line;
+        $i++;
+    }
+  }else{
+    $data[] = array('','No records found','','');
+  }
+  $table->data  = $data;      
+  $content .=html_writer::table($table);
+  $content .='</div>';
+  echo $content;
+}
+function stu_projectlist(){
+    global $OUTPUT,$CFG,$DB,$PAGE,$USER;
+    $count = 0;
+    $content = '';
+    $msg = '';
+    $indi_projects = array();
+    $content.='<div id="exTab_request" class=""> 
+                    <ul class="nav nav-tabs nav-justified ">
+                        <li class="active">
+                            <a  href="#1" data-toggle="tab">ACADEMIC PROJECTS</a>
+                        </li>
+                        <li>
+                            <a href="#2" data-toggle="tab">SUBSCRIBED INDUSTRY PROJECTS</a>
+                        </li>
+                    </ul>';
+
+    if($DB->record_exists('project_request',array())){
+        $content .='<div class="tab-content ">
+                            <div class="tab-pane active" id="1">';
+                            if($DB->record_exists('project_request',array('type'=>'in'))){
+                              $individual_requests = $DB->get_records('project_request',array('type'=>'in'));
+                              foreach ($individual_requests as $kir => $vir) {
+                                $creator_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vir->projectid));
+                                if($creator_project){
+                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester,'id'=>$vir->id,'status'=>$vir->status); 
+                                }
+                              }
+                              $table = new html_table();
+                              $table->head  = array('Sl.no','Login','Name','Project', 'Student Details', 'Synopsis','Action');
+                              $table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
+                              $table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
+                              $table->attributes['class'] = 'admintable generaltable';
+                              $table->id = 'filterssetting';
+                              $data = array();
+                              $i = 1;
+                              foreach ($indi_projects as $ipval) {
+                                $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
+                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
+                                $line = array();
+                                $line[] = $i;
+                                $line[] = $requestedby->username;
+                                $line[] = $requestedby->firstname;
+                                $line[] = $project_obj->title;
+                                $line[] = '<button type="button" id="'.$ipval['pid'].'-'.$ipval['requester'].'" onclick="view_single_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSingleStudentList">view</button>';
+                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
+
+                                if($ipval['status'] == 0){
+                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($ipval['status'] == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
+                                $data[] = $line;
+                                $i++;
+                              }
+                              
+                              $table->data  = $data;      
+                              $content .=html_writer::table($table);
+                              
+                              //print_object($indi_projects);
+                                //$academic_batches = $DB->get_records('batches',array('creatorid'=>$userid,'batchtype'=>'ACAD'));;
+                                //$content .=batchlist_tables($academic_batches,'ACAD');
+
+                            }else{
+                                $msg = 'You do not have any academic batches'; 
+                                $content .= $OUTPUT->notification($msg,'notifysuccess');
+                            }
+                            $content .='</div>
+                            <div class="tab-pane" id="2">';
+                            if($DB->record_exists('project_request',array('type'=>'gp'))){
+                              $group_requests = $DB->get_records('project_request',array('type'=>'gp'));
+                              foreach ($group_requests as $kg => $vg) {
+                                $creatorgp_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vg->projectid));
+                                if($creatorgp_project){
+                                  $grp_projects[] = array('pid'=>$vg->projectid,'requester'=>$vg->requester,'groupid'=>$vg->groupid,'status'=>$vg->status,'id'=>$vg->id); 
+                                }
+                              }
+                              $table = new html_table();
+                              $table->head  = array('Sl.no','Team Lead Login','Team Lead Name','Group Name','No of Students','Project', 'Student Details', 'Synopsis','Group','Project');
+                              //$table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
+                              //$table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
+                              $table->attributes['class'] = 'admintable generaltable';
+                              $table->id = 'filterssetting';
+                              $data = array();
+                              $i = 1;
+                              $count = 0;
+                              foreach ($grp_projects as $ipval) {
+                                $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
+                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
+                                $group_obj = $DB->get_record('project_group',array('id'=>$ipval['groupid']),'id,groupname,status');
+                                $group_members = $DB->get_records('group_to_student',array('groupid'=>$ipval['groupid'],'createdby'=>$ipval['requester']),'id,studentid');
+                                $count = count($group_members);
+                                $count = $count + 1;
+                                $line = array();
+                                $line[] = $i;
+                                $line[] = $requestedby->username;
+                                $line[] = $requestedby->firstname;
+                                $line[] = $group_obj->groupname;
+                                $line[] = $count;
+                                $line[] = $project_obj->title;
+                                $line[] = '<button type="button" id="'.$ipval['groupid'].'" onclick="view_group_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showGroupStudentList">view</button>';
+                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
+                                if($group_obj->status == 0){
+                                  $line[] = '<button type="button" id="'.$group_obj->id.'" onclick="approve_group(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$group_obj->id.'" onclick="reject_group(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($group_obj->status == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
+                                if($ipval['status'] == 0){
+                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                }elseif($ipval['status'] == 1){
+                                  $line[] = 'Approved';
+                                }else{
+                                  $line[] = 'Declined';
+                                }
+                                
+                                $data[] = $line;
+                                $i++;
+                              }
+                              
+                              $table->data  = $data;      
+                              $content .=html_writer::table($table);
 
                             }else{
                                 $msg = 'You do not have any non-academic batches'; 

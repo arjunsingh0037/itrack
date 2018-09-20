@@ -160,8 +160,7 @@ echo $OUTPUT->footer();
                     //var msg = '<div class="alert alert-danger" role="alert">Error sending request !!</div>'; 
                     swal("Error!", "Request not sent", "error");
                     //$("#sentRequestDetail").html(msg);
-                }
-                
+                }  
             }
         });
     }

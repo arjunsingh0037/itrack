@@ -620,16 +620,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     </div>';
         return $content;
     }
+
     public function left_menubar(){
         global $DB,$CFG,$OUTPUT,$PAGE,$USER;
         $sidebar_content = '';
-        $sidebar_content .= '<style>
-            
-            </style>';
-        $sidebar_content .= '<div id="nav-drawer" data-region="drawer" class="hidden-print moodle-has-zindex nav-collapse" aria-hidden="" tabindex="-1">
-                        <div class="leftside-navigation" tabindex="5000" style="outline: none;" id="style-1">
-                            <ul class="sidebar-menu" id="nav-accordion">
-                                <li>
+        $sidebar_content .= '<li>
                                     <a class="" href="'.$CFG->wwwroot.'/my">
                                         <i class="fa fa-tachometer"></i>
                                         <span class="text">Dashboard</span>
@@ -648,7 +643,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }else{ //student
             $sidebar_content .= $this->student_menu();
         }
-        $sidebar_content .= '</ul></div></div>';
+        $sidebar_content .= '';
         $sidebar_content .= "<script>
                             var acc = document.getElementsByClassName('accordion');
                             var i;
@@ -665,8 +660,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                               });
                             }
                             </script>";
-        echo $sidebar_content;
+        return $sidebar_content;
     }
+
     public function superadmin_menu(){
         global $DB,$CFG,$OUTPUT,$PAGE,$USER;
         $sidebar_admin = '';
@@ -1052,11 +1048,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $sidebar_students .='<button class="accordion"><i class="fa fa-code-fork"></i><span class="text">My eProjects</span></button>
                                 <div class="panel">
                                     <ul>
-                                        <li><a href="#">&#128902;  My Projects</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eProjects/eprojects.php">&#128902;  My Projects</a></li>
                                         <li><a href="'.$CFG->wwwroot.'/local/eProjects/group.php">&#128902;  Manage Group</a></li>
                                         <li><a href="'.$CFG->wwwroot.'/local/eProjects/grouplist.php">&#128902;  Assign Group</a></li>
                                         <li><a href="'.$CFG->wwwroot.'/local/eProjects/search-project.php">&#128902;  Search Projects</a></li>
-                                        <li><a href="#">&#128902;  Access Peers</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eProjects/accesspeer.php">&#128902;  Access Peers</a></li>
                                     </ul>
                                 </div>';
             }
@@ -1132,5 +1128,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     <a href="'.$CFG->wwwroot.'/login/logout.php?sesskey='.sesskey().'"><i class="fa fa-key"></i>Log out</a>
                 </div>';
         return $menu;
+    }
+    public function itrack_username(){
+        global $USER,$DB,$CFG;
+        $username = '';
+        $user = $DB->get_record('user',array('id'=>$USER->id),'id,firstname,username');
+        $username = $user->firstname;
+        return $username;
     }
 }
