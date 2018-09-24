@@ -1,0 +1,47 @@
+[14-Oct-2015 01:04:44 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 01:05:46 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 01:09:20 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 01:09:20 America/Yellowknife] Default exception handler: A required parameter (courseid) was missing Debug: 
+Error code: missingparam
+* line 481 of /lib/setuplib.php: moodle_exception thrown
+* line 548 of /lib/moodlelib.php: call to print_error()
+* line 14 of /local/course_batches/batch.php: call to required_param()
+
+[14-Oct-2015 03:20:44 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 03:35:34 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 03:40:54 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 04:25:47 America/Yellowknife] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batch.php:1) in /home/addioxuser/public_html/visitlearn/addilearn/lib/classes/session/handler.php on line 42
+[14-Oct-2015 06:52:10 America/Yellowknife] PHP Notice:  Undefined index: batchid in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 44
+[14-Oct-2015 06:52:10 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 45
+[14-Oct-2015 07:03:46 America/Yellowknife] PHP Notice:  Undefined index: batchid in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 44
+[14-Oct-2015 07:03:46 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 45
+[14-Oct-2015 07:04:38 America/Yellowknife] PHP Notice:  unserialize(): Error at offset 0 of 4 bytes in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 29
+[14-Oct-2015 07:04:38 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 30
+[14-Oct-2015 07:04:38 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 31
+[14-Oct-2015 07:04:38 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 32
+[14-Oct-2015 07:04:48 America/Yellowknife] PHP Notice:  Undefined index: batchid in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 44
+[14-Oct-2015 07:04:48 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 45
+[14-Oct-2015 07:11:42 America/Yellowknife] PHP Notice:  unserialize(): Error at offset 0 of 4 bytes in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 29
+[14-Oct-2015 07:11:42 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 30
+[14-Oct-2015 07:11:42 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 31
+[14-Oct-2015 07:11:42 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/ipn.php on line 32
+[14-Oct-2015 07:11:52 America/Yellowknife] PHP Notice:  unserialize(): Error at offset 0 of 4 bytes in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 44
+[14-Oct-2015 07:11:52 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 45
+[14-Oct-2015 07:11:52 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 46
+[14-Oct-2015 07:21:28 America/Yellowknife] PHP Notice:  Trying to get property of non-object in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/return.php on line 45
+[14-Oct-2015 21:00:00 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 21:00:00 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:22:05 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:22:05 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:25:47 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:25:47 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:26:09 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:26:09 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:26:42 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:26:42 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:27:00 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:27:00 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:28:26 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 22:28:26 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 23:10:34 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$firstname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21
+[14-Oct-2015 23:10:34 America/Yellowknife] PHP Notice:  Undefined property: stdClass::$lastname in /home/addioxuser/public_html/visitlearn/addilearn/local/course_batches/batchpay.php on line 21

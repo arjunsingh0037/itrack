@@ -441,26 +441,27 @@ function stu_projectlist(){
     $content.='<div id="exTab_request" class=""> 
                     <ul class="nav nav-tabs nav-justified ">
                         <li class="active">
-                            <a  href="#1" data-toggle="tab">ACADEMIC PROJECTS</a>
+                            <a  href="#1" data-toggle="tab"><span class="stulist">ACADEMIC PROJECTS </span></a>
                         </li>
                         <li>
-                            <a href="#2" data-toggle="tab">SUBSCRIBED INDUSTRY PROJECTS</a>
+                            <a href="#2" data-toggle="tab"><span class="stulist">SUBSCRIBED INDUSTRY PROJECTS</span></a>
                         </li>
                     </ul>';
 
     if($DB->record_exists('project_request',array())){
+        $indi_projects = array();
         $content .='<div class="tab-content ">
-                            <div class="tab-pane active" id="1">';
-                            if($DB->record_exists('project_request',array('type'=>'in'))){
-                              $individual_requests = $DB->get_records('project_request',array('type'=>'in'));
+                          <div class="tab-pane active" id="1">';
+                            if($DB->record_exists('project_request',array('type'=>'in','requester'=>$USER->id,'status'=>1))){
+                              $individual_requests = $DB->get_records('project_request',array('requester'=>$USER->id,'status'=>1));
                               foreach ($individual_requests as $kir => $vir) {
-                                $creator_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vir->projectid));
+                                $creator_project = $DB->get_record('project',array('id'=>$vir->projectid));
                                 if($creator_project){
-                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester,'id'=>$vir->id,'status'=>$vir->status); 
+                                  $indi_projects[] = array('pid'=>$vir->projectid,'requester'=>$vir->requester,'id'=>$vir->id,'status'=>$vir->status,'type'=>$vir->type,'time'=>$vir->timerequested); 
                                 }
                               }
                               $table = new html_table();
-                              $table->head  = array('Sl.no','Login','Name','Project', 'Student Details', 'Synopsis','Action');
+                              $table->head  = array('Sl.no','Title','Domain','Type', 'Last Date', 'View Weightage','Status');
                               $table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
                               $table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
                               $table->attributes['class'] = 'admintable generaltable';
@@ -469,98 +470,43 @@ function stu_projectlist(){
                               $i = 1;
                               foreach ($indi_projects as $ipval) {
                                 $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
-                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
+                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis,domain,duration');
+                                $dmn = $DB->get_record('domain',array('id'=>$project_obj->domain),'domain_name');
                                 $line = array();
                                 $line[] = $i;
-                                $line[] = $requestedby->username;
-                                $line[] = $requestedby->firstname;
                                 $line[] = $project_obj->title;
-                                $line[] = '<button type="button" id="'.$ipval['pid'].'-'.$ipval['requester'].'" onclick="view_single_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSingleStudentList">view</button>';
+                                $line[] = $dmn->domain_name;
+                                if($ipval['type'] == 'gp'){
+                                  $line[] = 'Group';
+                                }else{
+                                  $line[] = 'Individual';
+                                }
+                                $date = userdate($ipval['time'], '%Y-%m-%d', 99, true);
+                                $final_date = date('d-m-Y', strtotime($date. ' + '.$project_obj->duration.' days'));
+                                $line[] = $final_date;
                                 $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
 
                                 if($ipval['status'] == 0){
-                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
+                                  $line[] = 'Pending';
                                 }elseif($ipval['status'] == 1){
-                                  $line[] = 'Approved';
+                                  $line[] = 'Active';
                                 }else{
                                   $line[] = 'Declined';
                                 }
                                 $data[] = $line;
                                 $i++;
                               }
-                              
                               $table->data  = $data;      
                               $content .=html_writer::table($table);
-                              
-                              //print_object($indi_projects);
-                                //$academic_batches = $DB->get_records('batches',array('creatorid'=>$userid,'batchtype'=>'ACAD'));;
-                                //$content .=batchlist_tables($academic_batches,'ACAD');
-
                             }else{
-                                $msg = 'You do not have any academic batches'; 
-                                $content .= $OUTPUT->notification($msg,'notifysuccess');
+                                $msg = '<p style="text-align:center">You do not have any academic projects</p>'; 
+                                $content .= $msg;
                             }
+                            //Group project list for students
                             $content .='</div>
                             <div class="tab-pane" id="2">';
-                            if($DB->record_exists('project_request',array('type'=>'gp'))){
-                              $group_requests = $DB->get_records('project_request',array('type'=>'gp'));
-                              foreach ($group_requests as $kg => $vg) {
-                                $creatorgp_project = $DB->get_record('project',array('createdby'=>$USER->id,'id'=>$vg->projectid));
-                                if($creatorgp_project){
-                                  $grp_projects[] = array('pid'=>$vg->projectid,'requester'=>$vg->requester,'groupid'=>$vg->groupid,'status'=>$vg->status,'id'=>$vg->id); 
-                                }
-                              }
-                              $table = new html_table();
-                              $table->head  = array('Sl.no','Team Lead Login','Team Lead Name','Group Name','No of Students','Project', 'Student Details', 'Synopsis','Group','Project');
-                              //$table->size  = array('5%', '10%', '10%', '15%', '15%', '15%', '10%');
-                              //$table->colclasses = array ('leftalign','leftalign','leftalign', 'leftalign','leftalign','leftalign', 'centeralign');
-                              $table->attributes['class'] = 'admintable generaltable';
-                              $table->id = 'filterssetting';
-                              $data = array();
-                              $i = 1;
-                              $count = 0;
-                              foreach ($grp_projects as $ipval) {
-                                $requestedby = $DB->get_record('user',array('id'=>$ipval['requester']),'username,firstname');
-                                $project_obj = $DB->get_record('project',array('id'=>$ipval['pid']),'title,synopsis');
-                                $group_obj = $DB->get_record('project_group',array('id'=>$ipval['groupid']),'id,groupname,status');
-                                $group_members = $DB->get_records('group_to_student',array('groupid'=>$ipval['groupid'],'createdby'=>$ipval['requester']),'id,studentid');
-                                $count = count($group_members);
-                                $count = $count + 1;
-                                $line = array();
-                                $line[] = $i;
-                                $line[] = $requestedby->username;
-                                $line[] = $requestedby->firstname;
-                                $line[] = $group_obj->groupname;
-                                $line[] = $count;
-                                $line[] = $project_obj->title;
-                                $line[] = '<button type="button" id="'.$ipval['groupid'].'" onclick="view_group_students(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showGroupStudentList">view</button>';
-                                $line[] = '<button type="button" id="'.$ipval ['pid'].'" onclick="view_synopsis(this.id)" class="btn bg-light-blue btn-xs" data-toggle="modal" data-target="#showSynopsis">view</button>';
-                                if($group_obj->status == 0){
-                                  $line[] = '<button type="button" id="'.$group_obj->id.'" onclick="approve_group(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$group_obj->id.'" onclick="reject_group(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
-                                }elseif($group_obj->status == 1){
-                                  $line[] = 'Approved';
-                                }else{
-                                  $line[] = 'Declined';
-                                }
-                                if($ipval['status'] == 0){
-                                  $line[] = '<button type="button" id="'.$ipval ['id'].'" onclick="approve_request(this.id)" class="btn btn-info requestbtn edit_comp" data-toggle="modal" data-target="#showEditComponentForm">Approve</button><button type="button" id="'.$ipval ['id'].'" onclick="reject_request(this.id)" class="btn btn-info requestbtn1 delete_comp" data-toggle="modal" data-target="#showDeleteComponentForm">Decline</button>';
-                                }elseif($ipval['status'] == 1){
-                                  $line[] = 'Approved';
-                                }else{
-                                  $line[] = 'Declined';
-                                }
-                                
-                                $data[] = $line;
-                                $i++;
-                              }
-                              
-                              $table->data  = $data;      
-                              $content .=html_writer::table($table);
-
-                            }else{
-                                $msg = 'You do not have any non-academic batches'; 
-                                $content .= $OUTPUT->notification($msg,'notifysuccess');
-                            }
+                            $msg = 'You do not have any non-academic projects'; 
+                            $content .= $msg;
                             $content .= '</div></div>';
     }else{
         $content .= 'No request to show';

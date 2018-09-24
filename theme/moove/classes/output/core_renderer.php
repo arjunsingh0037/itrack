@@ -945,7 +945,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $sidebar_professors .='<button class="accordion"><i class="fa fa-laptop"></i><span class="text">My eLabs</span></button>
                             <div class="panel">
                                 <ul>
-                                    <li><a href="#">&#128902;  Add Labs</a></li>
+                                    <li><a href="'.$CFG->wwwroot.'/local/eLabs/addlabs.php">&#128902;  Add Labs</a></li>
                                     <li><a href="#">&#128902;  Assign Labs</a></li>
                                     <li><a href="#">&#128902;  List of Labs</a></li>
                                     <li><a href="#">&#128902;  Evaluate Labs</a></li>

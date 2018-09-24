@@ -37,6 +37,7 @@ if (isloggedin()) {
     $navdraweropen = false;
     $draweropenright = false;
 }
+$USER->editing = 1; 
 
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = strpos($blockshtml, 'data-block=') !== false;

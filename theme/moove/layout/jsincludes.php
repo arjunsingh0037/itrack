@@ -21,18 +21,22 @@
  * @copyright 2017 Willian Mano - http://conecti.me
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
-$course_array = array('abc','xyz','pqr');
 ?>
+
 <link rel="stylesheet" type="text/css" href="">
+
 <script src="<?php echo $CFG->wwwroot.'/theme/moove/layout/includes/js/jquery-1.12.0.min.js'?>"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script> -->
 <!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
 <script src="<?php echo $CFG->wwwroot.'/theme/moove/layout/includes/js/adminlte.min.js'?>"></script>
+<!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
 
 <script type="text/javascript">
     /*$(document).ready(function() {
@@ -115,227 +119,6 @@ $course_array = array('abc','xyz','pqr');
         }
     });
 
-//course pie chart for dashboard
-$('#course_container').highcharts({
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie',
-        spacingBottom: 0,
-        spacingTop: 0,
-        spacingLeft: 0,
-        spacingRight: 0,
-        width: 305,
-        height: 300,
-        backgroundColor:'#27314b',
-        position: 'relative',
-        overflow: 'hidden',
-    },
-    title: {
-        text: false
-    },
-    navigation: {
-        buttonOptions: {
-        enabled: false
-        }
-    },
-    credits: {
-        enabled: false
-    },
-    plotOptions: {
-        pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true
-                },
-                showInLegend: false
-          },
-          series: {
-                dataLabels: {
-                    enabled: false,
-                    color: '#fff'
-                }
-          }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-            name: 'Chrome',
-            y: 61.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Internet Explorer',
-            y: 11.84
-        }, {
-            name: 'Firefox',
-            y: 10.85
-        }, {
-            name: 'Edge',
-            y: 4.67
-        }, {
-            name: 'Safari',
-            y: 4.18
-        }, {
-            name: 'Sogou Explorer',
-            y: 1.64
-        }, {
-            name: 'Opera',
-            y: 1.6
-        }, {
-            name: 'QQ',
-            y: 1.2
-        }, {
-            name: 'Other',
-            y: 2.61
-        }]
-    }]
-});
-
-//progress bar for dashboard
-
-var chart = new Highcharts.Chart({
-  title: {
-    text: false,
-    align: 'left',
-    margin: 0,
-  },
-  chart: {
-    renderTo: 'progress_bar',
-    type: 'bar',
-    height: 70,
-    backgroundColor:'#27314b',
-  },
-  credits: false,
-  tooltip: false,
-  legend: false,
-  navigation: {
-    buttonOptions: {
-      enabled: false
-    }
-  },
-  xAxis: {
-    visible: false,
-  },
-  yAxis: {
-    visible: false,
-    min: 0,
-    max: 100,
-  },
-  series: [{
-    data: [100],
-    grouping: false,
-    animation: false,
-    enableMouseTracking: false,
-    showInLegend: false,
-    color: 'lightskyblue',
-    pointWidth: 25,
-    borderWidth: 0,
-    borderRadiusTopLeft: '4px',
-    borderRadiusTopRight: '4px',
-    borderRadiusBottomLeft: '4px',
-    borderRadiusBottomRight: '4px',
-    dataLabels: {
-      className: 'highlight',
-      format: '150 / 600',
-      enabled: true,
-      align: 'right',
-      style: {
-        color: 'white',
-        textOutline: false,
-      }
-    }
-  }, {
-    enableMouseTracking: false,
-    data: [25],
-    borderRadiusBottomLeft: '4px',
-    borderRadiusBottomRight: '4px',
-    color: '#43e023',
-    borderWidth: 0,
-    pointWidth: 25,
-    animation: {
-      duration: 250,
-    },
-    dataLabels: {
-      enabled: true,
-      inside: true,
-      align: 'left',
-      format: '{point.y}%',
-      style: {
-        color: 'white',
-        textOutline: false,
-      }
-    }
-  }]
-});
-
-//course pie chart for dashboard
-$('#projects_container').highcharts({
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie',
-        spacingBottom: 0,
-        spacingTop: 0,
-        spacingLeft: 0,
-        spacingRight: 0,
-        width: 305,
-        height: 300,
-        backgroundColor:'#27314b',
-        position: 'relative',
-        overflow: 'hidden',
-    },
-    title: {
-        text: false
-    },
-    navigation: {
-        buttonOptions: {
-        enabled: false
-        }
-    },
-    credits: {
-        enabled: false
-    },
-    plotOptions: {
-        pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true
-                },
-                showInLegend: false
-          },
-          series: {
-                dataLabels: {
-                    enabled: false,
-                    color: '#fff'
-                }
-          }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-            name: 'Chrome',
-            y: 11.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Edge',
-            y: 14.67
-        }, {
-            name: 'Safari',
-            y: 4.18
-        }, {
-            name: 'Sogou Explorer',
-            y: 1.64
-        }]
-    }]
-});
 
 /*----- Dashboard Datatables------ */
 /*$(document).ready(function() {
@@ -343,4 +126,573 @@ $('#projects_container').highcharts({
         $('#example'+i).DataTable();
     }
 } );*/
+//container 1 for partner-admin
+Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y:.0f}',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'Training Partners',
+        colorByPoint: true,
+        data: [{
+            name: 'tp1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'tp2',
+            y: 11
+        }, {
+            name: 'tp3',
+            y: 10
+        }, {
+            name: 'tp4',
+            y: 4
+        }, {
+            name: 'tp5',
+            y: 4
+        }, {
+            name: 'tp6',
+            y: 1
+        }, {
+            name: 'tp7',
+            y: 1
+        }]
+    }]
+});
+
+//container2 for partner admin
+Highcharts.chart('contain', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'Hiring Companies',
+        colorByPoint: true,
+        data: [{
+            name: 'hc1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'hc2',
+            y: 11
+        }, {
+            name: 'hc3',
+            y: 10
+        }, {
+            name: 'hc4',
+            y: 4
+        }, {
+            name: 'hc5',
+            y: 4
+        }, {
+            name: 'hc6',
+            y: 7
+        }]
+    }]
+});
+</script>
+
+<script type="text/javascript">
+
+Highcharts.chart('container1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y:.0f}',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'My Courses',
+        colorByPoint: true,
+        data: [{
+            name: 'crs1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'crs2',
+            y: 11
+        }, {
+            name: 'crs3',
+            y: 10
+        }, {
+            name: 'crs4',
+            y: 4
+        }, {
+            name: 'crs5',
+            y: 4
+        }, {
+            name: 'crs6',
+            y: 1
+        }, {
+            name: 'crs7',
+            y: 1
+        }]
+    }]
+});
+
+
+//container2 for partner admin
+Highcharts.chart('container2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'My Batches',
+        colorByPoint: true,
+        data: [{
+            name: 'bat1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'bat2',
+            y: 11
+        }, {
+            name: 'bat3',
+            y: 10
+        }, {
+            name: 'bat4',
+            y: 4
+        }, {
+            name: 'bat5',
+            y: 4
+        }, {
+            name: 'bat6',
+            y: 7
+        }]
+    }]
+});
+
+
+// Build the chart
+Highcharts.chart('container3', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                },
+                connectorColor: 'silver'
+            }
+        }
+    },
+    credits: {
+      enabled: false
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'Student',
+        data: [
+            { name: 'std1', y: 61.41 },
+            { name: 'std2', y: 11.84 },
+            { name: 'std3', y: 10.85 },
+            { name: 'std4', y: 4.67 },
+            { name: 'std5', y: 4.18 },
+            { name: 'std6', y: 7.05 }
+        ]
+    }]
+});
+// Build the chart
+Highcharts.chart('container4', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                },
+                connectorColor: 'silver'
+            }
+        }
+    },
+    credits: {
+      enabled: false
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'Professor',
+        data: [
+            { name: 'pf1', y: 61.41 },
+            { name: 'pf2', y: 11.84 },
+            { name: 'pf3', y: 10.85 },
+            { name: 'pf4', y: 4.67 },
+            { name: 'pf5', y: 4.18 },
+            { name: 'pf6', y: 7.05 }
+        ]
+    }]
+});
+</script>
+<script type="text/javascript">
+
+Highcharts.chart('containerpf1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y:.0f}',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'My Courses',
+        colorByPoint: true,
+        data: [{
+            name: 'crs1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'crs2',
+            y: 11
+        }, {
+            name: 'crs3',
+            y: 10
+        }, {
+            name: 'crs4',
+            y: 4
+        }, {
+            name: 'crs5',
+            y: 4
+        }, {
+            name: 'crs6',
+            y: 1
+        }, {
+            name: 'crs7',
+            y: 1
+        }]
+    }]
+});
+
+
+// Build the chart
+Highcharts.chart('containerpf2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                },
+                connectorColor: 'silver'
+            }
+        }
+    },
+    credits: {
+      enabled: false
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'My Batches',
+        data: [
+            { name: 'bat1', y: 61.41 },
+            { name: 'bat2', y: 11.84 },
+            { name: 'bat3', y: 10.85 },
+            { name: 'bat4', y: 4.67 },
+            { name: 'bat5', y: 4.18 },
+            { name: 'bat6', y: 7.05 }
+        ]
+    }]
+});
+// Build the chart
+Highcharts.chart('containerpf3', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                },
+                connectorColor: 'silver'
+            }
+        }
+    },
+    credits: {
+      enabled: false
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'My Labs',
+        data: [
+            { name: 'pf1', y: 61.41 },
+            { name: 'pf2', y: 11.84 },
+            { name: 'pf3', y: 10.85 },
+            { name: 'pf4', y: 4.67 },
+            { name: 'pf5', y: 4.18 },
+            { name: 'pf6', y: 7.05 }
+        ]
+    }]
+});
+</script>
+<script type="text/javascript">
+//container2 for partner admin
+Highcharts.chart('containerstud1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+        }
+    },
+    navigation: {
+        buttonOptions: {
+          enabled: false
+        }
+    },
+    series: [{
+        name: 'Courses',
+        colorByPoint: true,
+        data: [{
+            name: 'cs1',
+            y: 61,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'cs2',
+            y: 11
+        }, {
+            name: 'cs3',
+            y: 10
+        }, {
+            name: 'cs4',
+            y: 4
+        }, {
+            name: 'cs5',
+            y: 4
+        }, {
+            name: 'cs6',
+            y: 7
+        }]
+    }]
+});
 </script>

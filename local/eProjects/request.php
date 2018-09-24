@@ -16,6 +16,7 @@ if (!(user_has_role_assignment($USER->id, 12, SYSCONTEXTID))) {
     redirect($CFG->wwwroot.'/my','You do not have access to this page.',2,null,'error');
     die; 
 }
+
 echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">';
 $title = 'Project Requests';
