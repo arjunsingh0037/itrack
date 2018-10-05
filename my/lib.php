@@ -215,7 +215,7 @@ function my_reset_page_for_all_users($private = MY_PAGE_PRIVATE, $pagetype = 'my
 
 //function to show student account
 
-//function to sho user's enrolled  courses
+//function to show user's enrolled  courses
 function student_courselist($userid,$creatorid,$roleid){
     global $OUTPUT,$CFG,$DB,$PAGE;
     $count = 0;$flag = 0; 

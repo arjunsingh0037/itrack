@@ -21,7 +21,11 @@ $capabilities = array(
         'archetypes' => array(
             'manager' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'coursecreator' => CAP_ALLOW
+            'coursecreator' => CAP_ALLOW,
+            'accountmanager' => CAP_ALLOW,
+            'partner' => CAP_ALLOW,
+            'trainingpartner' => CAP_ALLOW,
+            'professor' => CAP_ALLOW,
         ),
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
@@ -33,7 +37,10 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
             'coursecreator' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW
+            'accountmanager' => CAP_ALLOW,
+            'partner' => CAP_ALLOW,
+            'trainingpartner' => CAP_ALLOW,
+            'professor' => CAP_ALLOW,
         )
     ),
 
@@ -44,7 +51,11 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
-            'coursecreator' => CAP_ALLOW
+            'coursecreator' => CAP_ALLOW,
+            'accountmanager' => CAP_ALLOW,
+            'partner' => CAP_ALLOW,
+            'trainingpartner' => CAP_ALLOW,
+            'professor' => CAP_ALLOW,
         )
     ),
 

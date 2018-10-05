@@ -946,8 +946,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             <div class="panel">
                                 <ul>
                                     <li><a href="'.$CFG->wwwroot.'/local/eLabs/addlabs.php">&#128902;  Add Labs</a></li>
-                                    <li><a href="#">&#128902;  Assign Labs</a></li>
-                                    <li><a href="#">&#128902;  List of Labs</a></li>
+                                    <li><a href="'.$CFG->wwwroot.'/local/eLabs/assign_labs.php">&#128902;  Assign Labs</a></li>
+                                    <li><a href="'.$CFG->wwwroot.'/local/eLabs/lablists.php">&#128902;  List of Labs</a></li>
                                     <li><a href="#">&#128902;  Evaluate Labs</a></li>
                                 </ul>
                             </div>';
@@ -1038,7 +1038,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $sidebar_students .='<button class="accordion"><i class="fa fa-laptop"></i><span class="text">My eLabs</span></button>
                                 <div class="panel">
                                     <ul>
-                                        <li><a href="#">&#128902;  My Labs</a></li>
+                                        <li><a href="'.$CFG->wwwroot.'/local/eLabs/myelabs.php">&#128902;  My Labs</a></li>
                                         <li><a href="#">&#128902;  My lab feedbacks</a></li>
                                         <li><a href="#">&#128902;  My lab reports Group</a></li>
                                     </ul>

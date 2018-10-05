@@ -10,165 +10,250 @@
 require(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once ('lib.php');
 require_once ('academic_elab_form.php');
-require_once ('nonacademic_batch_form.php');
-require_once ('subscribed_batch_form.php');
+require_once ('subscribed_elab_form.php');
 
 $course = $DB->get_records('course');
-require_login();
 $context = context_system::instance();
 /*require_capability('moodle/role:assign', $context);*/
 $PAGE->set_context($context);
 /// Start making page
 $PAGE->set_pagelayout('course');
 $url = new moodle_url($CFG->wwwroot.'/local/eLabs/addlabs.php');
+require_once($CFG->libdir.'/adminlib.php');
 $PAGE->set_url($url);
 $PAGE->requires->css('/local/eLabs/style/styles.css');
-//By Arjun 
-/*$currentuser = $USER->id;
-$user = $DB->record_exists('trainingpartners', array('userid' => $currentuser));
-if (!$user) {
-    echo $OUTPUT->header();
-    redirect($CFG->wwwroot.'/my','You do not have access to this page.',1,'error');
-    die; 
-}*/
-
+require_once($CFG->dirroot . '/course/modlib.php');
+echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">';
 $addnewpromo='Add eLabs';
 $PAGE->navbar->add($addnewpromo);
 $PAGE->set_title($addnewpromo);
 $PAGE->set_heading('Add eLabs');
 echo $OUTPUT->header();
 $newobj = new stdClass();
+
 echo '<div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">
-  	<div class="form-group">
-	    <label style="padding-right: 15px;">Course Type </label>
-	    <label class="radio-inline"><input type="radio" name="course_type" id="id_private" value="Private">Academic</label>
-	    <label class="radio-inline"><input type="radio" name="course_type" id="id_subscribed" value="Public">Subscribed Industry</label>
-	</div>
-  </div>
+  <div class="panel-heading listhead">LAB DETAILS</div>
   <div class="panel-body">
-  <div id="id_error_batchexists"></div>
+	  	<div class="form-group">
+		    <label style="padding-right: 15px;">Course Type </label>
+		    <label class="radio-inline"><input type="radio" name="course_type" id="id_private" value="Private" required>Academic</label>
+		    <label class="radio-inline"><input type="radio" name="course_type" id="id_subscribed" value="Public">Subscribed Industry</label>
+		</div>
+  		<div id="id_error_batchexists"></div>
     	<div class="form-group" id="academic_batch" style="display:none;">';
 			$academic_mform = new academic_elabs_form();
 			//print_object($_POST);die();
 			if ($academic_data = $academic_mform->get_data()) {
 				global $USER;
-				// print_object($academic_data);
-				// print_object($_POST);die();
-				$insert_ab = new stdClass();
-				$insert_ab->batchname = $academic_data->ac_batchname;
-				$insert_ab->batchcode = $academic_data->ac_batchcode;
-				$insert_ab->batchtype = $academic_data->btype;
-				$insert_ab->creatorid = $USER->id;
-				$insert_ab->program = $academic_data->ac_program;
-				$insert_ab->stream = $_POST['ac_stream'];
-				$insert_ab->semester = $academic_data->ac_semester;
-				$insert_ab->semyear = $academic_data->ac_semester_year;
-				$insert_ab->course = NULL;
-				$insert_ab->professor = NULL;
-				$insert_ab->startdate = NULL;
-				$insert_ab->enddate = NULL;
-				$insert_ab->batchlimit = NULL;
-				$insert_ab->timecreated = time();
-				
-			    $creadted_ab = $DB->insert_record('batches',$insert_ab); 
+				$course = $DB->get_record('course',array('id'=>$academic_data->ac_course));
+				$intanceob = $DB->get_records('vpl');
+				foreach ($intanceob as $key => $value) {
+					$currentkey = $value->id;
+				}
+				//print_object($academic_data->radioar2['type']);
+				//creating new instance  of mdl_vpl in course
+				$newvpl = new stdClass();
+				$newvpl->course = $academic_data->ac_course;
+				$newvpl->name = 'LAB_00'.($currentkey+1);
+				$newvpl->shortdescription = 'ACAD';
+				$newvpl->introformat = 1;
+				$newvpl->startdate = $academic_data->availfrom;
+				$newvpl->duedate = $academic_data->availupto;
+				$newvpl->maxfiles = 1;
+				$newvpl->maxfilesize = 0;
+				$newvpl->grade = 100;
+				$newvpl->visiblegrade = 1;
+				$newvpl->usevariations = 0;
+				$newvpl->basedon = 0;
+				$newvpl->run = 1;
+				$newvpl->debug = 1;
+				$newvpl->evaluate = 1;
+				$newvpl->evaluateonsubmission = 0;
+				$newvpl->automaticgrading = 0;
+				$newvpl->restrictededitor = 0;
+				$newvpl->example = $academic_data->testlab;
+				//arjun-later - for begineer/expert level
+				$newvpl->worktype = 0;
+				$newvpl->emailteachers = 0;
+				$newvpl->timemodified = time();
+				$newvpl->freeevaluations = 0;
+				$newvpl->reductionbyevaluation = 0;
+				$newvpl->runscript = $academic_data->radioar2['type'];
+				$newvpl->debugscript = $academic_data->radioar2['type'];
+				$newvpl_created = $DB->insert_record('vpl',$newvpl);
+				if($newvpl_created){
+					$vpl = $DB->get_record('vpl',array('id'=>$newvpl_created),'id,course');
+					$sec_obj = $DB->get_record('course_sections',array('course'=>$vpl->course,'section'=>0),'id,section');
+					$newcrsmodule = new stdClass();
+					$newcrsmodule->course = $vpl->course;
+					$newcrsmodule->module = 24;
+					$newcrsmodule->instance = $vpl->id;
+					$newcrsmodule->section = $sec_obj->id;
+					$newcrsmodule->added = time(); 
+					$newcrsmodule->score = 0;
+					$newcrsmodule->indent = 0;
+					$newcrsmodule->visible = 1; 
+					$newcrsmodule->visibleoncoursepage = 1;
+					$newcrsmodule->visibleold = 1; 
+					$newcrsmodule->groupmode = 0; 
+					$newcrsmodule->groupingid = 0; 
+					$newcrsmodule->completion = 1; 
+					$newcrsmodule->completionview = 0; 
+					$newcrsmodule->completionexpected = 0; 
+					$newcrsmodule->showdescription = 0; 
+					$newcrsmodule->deletioninprogress = 0; 
+					$newcrsmodule->visible = 1; 
+					$newcrsmodule_created = $DB->insert_record('course_modules',$newcrsmodule);
+					if($newcrsmodule_created){
+						$crsmodule_data = $DB->get_record('course_modules',array('id'=>$newcrsmodule_created),'id,course');
+						//creating new context & updating mdl_context
+						$ctx_obj = $DB->get_record('context',array('contextlevel'=>50,'instanceid'=>$crsmodule_data->course),'id,path,depth');
+						$new_ctx = new stdClass();
+						$new_ctx->contextlevel = 70;
+						$new_ctx->instanceid = $crsmodule_data->id;
+						$new_ctx->path = $ctx_obj->path;
+						$new_ctx->depth = $ctx_obj->depth;
+						$new_ctx_created = $DB->insert_record('context',$new_ctx);
+						if($new_ctx_created){
+							$ctxobj = $DB->get_record('context',array('id'=>$new_ctx_created),'id,path,depth');
+							$update_ctx = new stdClass();
+							$update_ctx->id = $new_ctx_created;
+							$update_ctx->path = $ctxobj->path.'/'.$new_ctx_created;
+							$update_ctx->depth = $ctxobj->depth + 1;
+							$updated_ctx = $DB->update_record('context',$update_ctx);
+						}
+
+						// updating mdl_course_section sequence column
+						$mod_obj = $DB->get_record('course_modules',array('id'=>$newcrsmodule_created),'id,section');
+						$sect_obj = $DB->get_record('course_sections',array('id'=>$mod_obj->section),'id,sequence');
+						$newsequence = new stdClass();
+						$newsequence->id = $mod_obj->section;
+						$newsequence->sequence = $sect_obj->sequence.','.$mod_obj->id;
+						$update_section = $DB->update_record('course_sections',$newsequence);
+						if($update_section){
+							/*echo '<script>swal("Success!", "New eLab created", "success")</script>';*/
+							echo "<script>sessionStorage.setItem('labkeyid', '".$newvpl_created."');</script>";
+							$url = $CFG->wwwroot.'/local/eLabs/alabdetails.php';
+							redirect($url);
+						}
+					}
+				}
 			}
 			$academic_mform->set_data($newobj);
 			$academic_mform->display();
+
 	echo '</div>';
-	if(isset($creadted_ab)) {
+	/*if(isset($creadted_ab)) {
 			echo '<div id="batchsuccess">';
     		echo $OUTPUT->notification('Academic Batch Created','notifysuccess');
     		echo '</div>';
 			//redirect($CFG->wwwroot . "/local/course_batches/batch.php",'Batch created');
-	}
-	
-	echo '<div class="form-group"  id="nonacademic_batch" style="display:none;">';
-			$nonacademic_mform = new nonacademic_batches_form();
-			if ($nonacademic_data = $nonacademic_mform->get_data()) {
-				global $USER;
-				// print_object($academic_data);
-				// print_object($_POST);die();
-				$insert_nab = new stdClass();
-				$insert_nab->batchname = $nonacademic_data->batchname;
-				$insert_nab->batchcode = $nonacademic_data->batchcode;
-				$insert_nab->batchtype = $nonacademic_data->btype;
-				$insert_nab->creatorid = $USER->id;
-				$insert_nab->program = NULL;
-				$insert_nab->stream = NULL;
-				$insert_nab->semester = NULL;
-				$insert_nab->semyear = NULL;
-				$insert_nab->course = NULL;
-				$insert_nab->professor = NULL;
-				$insert_nab->startdate = NULL;
-				$insert_nab->enddate = NULL;
-				$insert_nab->batchlimit = NULL;
-				$insert_nab->timecreated = time();
-				
-			    $creadted_nab = $DB->insert_record('batches',$insert_nab); 
-			}
-			$nonacademic_mform->set_data($newobj);
-			$nonacademic_mform->display();
-	echo '</div>';
-	if(isset($creadted_nab)) {
-			echo '<div id="batchsuccess">';
-    		echo $OUTPUT->notification('Non-academic Batch Created','notifysuccess');
-    		echo '</div>';
-			//redirect($CFG->wwwroot . "/local/course_batches/batch.php",'Batch created');
-	}
+	}*/
 	echo '<div class="form-group"  id="subscribed_batch" style="display:none;">';
-			$subscribed_mform = new subscribed_batches_form();
+			$args = array(
+			    'labid' => 2
+			);
+			//$reurl = new moodle_url('/local/eLabs/labdetails.php');
+			$subscribed_mform = new subscribed_elabs_form();
 			if ($subscribed_data = $subscribed_mform->get_data()) {
 				global $USER;
-				$insert_sb = new stdClass();
-				$insert_sb->batchname = $subscribed_data->batchname;
-				$insert_sb->batchcode = $subscribed_data->batchcode;
-				$insert_sb->batchtype = $subscribed_data->btype;
-				$insert_sb->creatorid = $USER->id;
-				$insert_sb->program = null;
-				$insert_sb->stream = null;
-				$insert_sb->semester = null;
-				$insert_sb->semyear = null;
-				$insert_sb->course = $subscribed_data->course;
-				$insert_sb->professor = $_POST['professor'];
-				$insert_sb->startdate = $subscribed_data->batchstart;
-				$insert_sb->enddate = $subscribed_data->batchend;
-				$insert_sb->batchlimit = $subscribed_data->batchlimit;
-				$insert_sb->timecreated = time();
-				$creadted_sb = $DB->insert_record('batches',$insert_sb); 
+				$course = $DB->get_record('course',array('id'=>$subscribed_data->ac_course));
+				$intanceob = $DB->get_records('vpl');
+				foreach ($intanceob as $key => $value) {
+					$currentkey = $value->id;
+				}
+				//creating new instance  of mdl_vpl in course
+				$newvpl = new stdClass();
+				$newvpl->course = $subscribed_data->ac_course;
+				$newvpl->name = 'LAB_00'.($currentkey+1);
+				$newvpl->shortdescription = 'SUBS';
+				$newvpl->introformat = 1;
+				$newvpl->startdate = $subscribed_data->availfrom;
+				$newvpl->duedate = $subscribed_data->availupto;
+				$newvpl->maxfiles = 1;
+				$newvpl->maxfilesize = 0;
+				$newvpl->grade = 100;	
+				$newvpl->visiblegrade = 1;
+				$newvpl->usevariations = 0;
+				$newvpl->basedon = 0;
+				$newvpl->run = 1;
+				$newvpl->debug = 1;
+				$newvpl->evaluate = 1;
+				$newvpl->evaluateonsubmission = 0;
+				$newvpl->automaticgrading = 0;
+				$newvpl->restrictededitor = 0;
+				$newvpl->example = 0;
+				$newvpl->worktype = 0;
+				$newvpl->emailteachers = 0;
+				$newvpl->timemodified = time();
+				$newvpl->freeevaluations = 0;
+				$newvpl->reductionbyevaluation = 0;
+				$newvpl->runscript = $subscribed_data->radioar2['type'];
+				$newvpl->debugscript = $subscribed_data->radioar2['type'];
+				$newvpl_created = $DB->insert_record('vpl',$newvpl);
+				if($newvpl_created){
+					$vpl = $DB->get_record('vpl',array('id'=>$newvpl_created),'id,course');
+					$sec_obj = $DB->get_record('course_sections',array('course'=>$vpl->course,'section'=>0),'id,section');
+					$newcrsmodule = new stdClass();
+					$newcrsmodule->course = $vpl->course;
+					$newcrsmodule->module = 24;
+					$newcrsmodule->instance = $vpl->id;
+					$newcrsmodule->section = $sec_obj->id;
+					$newcrsmodule->added = time(); 
+					$newcrsmodule->score = 0;
+					$newcrsmodule->indent = 0;
+					$newcrsmodule->visible = 1; 
+					$newcrsmodule->visibleoncoursepage = 1;
+					$newcrsmodule->visibleold = 1; 
+					$newcrsmodule->groupmode = 0; 
+					$newcrsmodule->groupingid = 0; 
+					$newcrsmodule->completion = 1; 
+					$newcrsmodule->completionview = 0; 
+					$newcrsmodule->completionexpected = 0; 
+					$newcrsmodule->showdescription = 0; 
+					$newcrsmodule->deletioninprogress = 0; 
+					$newcrsmodule->visible = 1; 
+					$newcrsmodule_created = $DB->insert_record('course_modules',$newcrsmodule);
+					if($newcrsmodule_created){
+						$crsmodule_data = $DB->get_record('course_modules',array('id'=>$newcrsmodule_created),'id,course');
+						//creating new context & updating mdl_context
+						$ctx_obj = $DB->get_record('context',array('contextlevel'=>50,'instanceid'=>$crsmodule_data->course),'id,path,depth');
+						$new_ctx = new stdClass();
+						$new_ctx->contextlevel = 70;
+						$new_ctx->instanceid = $crsmodule_data->id;
+						$new_ctx->path = $ctx_obj->path;
+						$new_ctx->depth = $ctx_obj->depth;
+						$new_ctx_created = $DB->insert_record('context',$new_ctx);
+						if($new_ctx_created){
+							$ctxobj = $DB->get_record('context',array('id'=>$new_ctx_created),'id,path,depth');
+							$update_ctx = new stdClass();
+							$update_ctx->id = $new_ctx_created;
+							$update_ctx->path = $ctxobj->path.'/'.$new_ctx_created;
+							$update_ctx->depth = $ctxobj->depth + 1;
+							$updated_ctx = $DB->update_record('context',$update_ctx);
+						}
+
+						// updating mdl_course_section sequence column
+						$mod_obj = $DB->get_record('course_modules',array('id'=>$newcrsmodule_created),'id,section');
+						$sect_obj = $DB->get_record('course_sections',array('id'=>$mod_obj->section),'id,sequence');
+						$newsequence = new stdClass();
+						$newsequence->id = $mod_obj->section;
+						$newsequence->sequence = $sect_obj->sequence.','.$mod_obj->id;
+						$update_section = $DB->update_record('course_sections',$newsequence);
+						if($update_section){
+							/*echo '<script>swal("Success!", "New eLab created", "success")</script>';*/
+							echo "<script>sessionStorage.setItem('labkeyid', '".$newvpl_created."');</script>";
+							$url = $CFG->wwwroot.'/local/eLabs/alabdetails.php';
+							redirect($url);
+						}
+					}
+				}	 
 			}
 			$subscribed_mform->set_data($newobj);
 			$subscribed_mform->display();
 	echo '</div>';
-	if(isset($creadted_sb)) {
-			$batch_obj = $DB->get_record('batches',array('id'=>$creadted_sb));
-			$sub_batch_to_course = new stdClass();
-			$sub_batch_to_course->createdby = $USER->id;
-			$sub_batch_to_course->batchid = $creadted_sb;
-			$sub_batch_to_course->timecreated = time();
-			$sub_batch_to_course->courseid = $batch_obj->course;
-            $sub_batch_to_course->migrated = 0;
-            $tocourse_sub = $DB->insert_record('course_batches',$sub_batch_to_course);
-			if($tocourse_sub){
-				$courses = array($batch_obj->course);
-				$professor_assigned = professor_coursebatch_enrolment($batch_obj->professor,$courses);
-				if($professor_assigned){
-					echo '<div id="batchsuccess">';
-		    		echo $OUTPUT->notification('Subscribed Batch Created','notifysuccess');
-		    		echo '</div>';
-				}else{
-					echo '<div id="batchsuccess1">';
-		    		echo $OUTPUT->notification('Error Assigning Batch To Professor','notifydanger');
-		    		echo '</div>';
-				}
-			}else{
-				echo '<div id="batchsuccess2">';
-	    		echo $OUTPUT->notification('Error Creating Batch','notifydanger');
-	    		echo '</div>';
-			}
-			//redirect($CFG->wwwroot . "/local/course_batches/batch.php",'Batch created');
-	}
   echo '</div>
 </div>';
 
@@ -180,6 +265,7 @@ echo '<div class="panel panel-default">
 //academic_mform = new academic_batches_form();
 //$academic_mform->display();
 echo $OUTPUT->footer();
+purge_all_caches();
 ?>
 <script type="text/javascript">
 
@@ -224,11 +310,11 @@ echo $OUTPUT->footer();
 
     });
 	$(document).ready(function () {
-	    $("#id_programs").append("<option value='' disabled selected>Select Program</option>");
+	    /*$("#id_programs").append("<option value='' disabled selected>Select Program</option>");
 	    $("#id_streams").append("<option value='' disabled selected>Select Stream</option>");
 	    $("#id_syears").append("<option value='' disabled selected>Select Year</option>");
-	    $("#id_semesters").append("<option value='' disabled selected>Select Semester</option>");
-	    $("#id_programs").change(function(){
+	    $("#id_semesters").append("<option value='' disabled selected>Select Semester</option>");*/
+	    /*$("#id_programs").change(function(){
 	        var pid = $(this).val();
 	        $.ajax({
 	            url: 'batchajax.php',
@@ -246,10 +332,10 @@ echo $OUTPUT->footer();
 	                }
 	            }
 	        });
-    	});
-    	$("#id_courses").append("<option value='' disabled selected>Select Course</option>");
-    	$("#id_professor").append("<option value='' disabled selected>Select Professor</option>");
-    	$("#id_courses").change(function(){
+    	});*/
+    	$("#id_courses").prepend("<option value='' disabled selected>Select Course</option>");
+    	$("#id_subcourses").prepend("<option value='' disabled selected>Select Course</option>");
+    	/*$("#id_courses").change(function(){
 	        var crsid = $(this).val();
 	        $.ajax({
 	            url: 'batchajax.php',
@@ -267,9 +353,9 @@ echo $OUTPUT->footer();
 	                }
 	            }
 	        });
-    	});
+    	});*/
 
-    	$("#id_semesters").change(function(){
+    	/*$("#id_semesters").change(function(){
     		var btype = $("#id_btype").val();
     		var program = $("#id_programs").val();
     		var stream = $("#id_streams").val();
@@ -293,7 +379,7 @@ echo $OUTPUT->footer();
                 	}
 	            }
 	        });
-    	});
+    	});*/
 
     	// $("#id_streams").change(function(){
 	    //     var crsid = $(this).val();
