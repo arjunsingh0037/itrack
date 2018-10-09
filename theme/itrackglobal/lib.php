@@ -616,10 +616,10 @@ function theme_itrackglobal_set_background_repeat($css, $repeat, $size) {
     return $css;
 }
 
-function theme_itrackglobal_page_init(moodle_page $page) {
+/*function theme_itrackglobal_page_init(moodle_page $page) {
     $page->requires->jquery();
 	$page->requires->jquery_plugin('jquery.easing.1.3', 'theme_itrackglobal'); 
 	$page->requires->jquery_plugin('camera_slider', 'theme_itrackglobal');
     $page->requires->jquery_plugin('jquery.bxslider', 'theme_itrackglobal'); 
     $page->requires->jquery_plugin('jquery.slimscroll', 'theme_itrackglobal'); 
-}
+}*/

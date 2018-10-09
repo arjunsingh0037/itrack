@@ -1,228 +1,289 @@
-<?php 
-$haslogo = (!empty($PAGE->theme->settings->logo));
-?>
-<!-- Main Header -->
-<header class="header fixed-top clearfix">
-  <!--logo start-->
-  <div class="brand">
+<header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
 
-    <a href="<?php echo $CFG->wwwroot.'/?redirect=0'?>" class="logo">
-      <img src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/logo.png'?>" alt="">
-    </a>
-    <div class="sidebar-toggle-box">
-      <div class="fa fa-bars"></div>
-    </div>
-  </div>
-  <!--logo end-->
-
-  <div class="nav notify-row" id="top_menu">
-    <!--  notification start -->
-    <ul class="nav top-menu">
-      <!-- settings start -->
-      <li class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-          <i class="fa fa-tasks"></i>
-          <span class="badge bg-success">8</span>
-        </a>
-        <ul class="dropdown-menu extended tasks-bar">
-          <li>
-            <p class="">You have 8 pending tasks</p>
-          </li>
-          <li>
-            <a href="#">
-              <div class="task-info clearfix">
-                <div class="desc pull-left">
-                  <h5>Target Sell</h5>
-                  <p>25% , Deadline  12 June’13</p>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                         <!-- dark Logo text -->
+                         <img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text -->    
+                         <img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>';?>
                 </div>
-                <span class="notification-pie-chart pull-right" data-percent="45">
-                  <span class="percent"></span>
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="task-info clearfix">
-                <div class="desc pull-left">
-                  <h5>Product Delivery</h5>
-                  <p>45% , Deadline  12 June’13</p>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                            <div class="dropdown-menu scale-up-left">
+                                <ul class="mega-dropdown-menu row">
+                                    <li class="col-lg-3 col-xlg-2 m-b-30">
+                                        <h4 class="m-b-20">CAROUSEL</h4>
+                                        <!-- CAROUSEL -->
+                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner" role="listbox">
+                                                <div class="carousel-item active">
+                                                    <div class="container"> <img class="d-block img-fluid" src="assets/images/big/img1.jpg" alt="First slide"></div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="container"><img class="d-block img-fluid" src="assets/images/big/img2.jpg" alt="Second slide"></div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="container"><img class="d-block img-fluid" src="assets/images/big/img3.jpg" alt="Third slide"></div>
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+                                        </div>
+                                        <!-- End CAROUSEL -->
+                                    </li>
+                                    <li class="col-lg-3 m-b-30">
+                                        <h4 class="m-b-20">ACCORDION</h4>
+                                        <!-- Accordian -->
+                                        <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  Collapsible Group Item #1
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high. </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingTwo">
+                                                    <h5 class="mb-0">
+                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                  Collapsible Group Item #2
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingThree">
+                                                    <h5 class="mb-0">
+                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                  Collapsible Group Item #3
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">CONTACT US</h4>
+                                        <!-- Contact -->
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </li>
+                                    <li class="col-lg-3 col-xlg-4 m-b-30">
+                                        <h4 class="m-b-20">List style</h4>
+                                        <!-- List style -->
+                                        <ul class="list-style-none">
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Forth link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another fifth link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">You have 4 new messages</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> 
+                                                <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user" class="img-circle">';?>
+                                                 <span class="profile-status online pull-right">
+                                                 </span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> 
+                                                <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/2.jpg" alt="user" class="img-circle">';?> <span class="profile-status busy pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> 
+                                                <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/3.jpg" alt="user" class="img-circle">'?> 
+                                                <span class="profile-status away pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> 
+                                                <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user" class="img-circle">';?> <span class="profile-status offline pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user" class="profile-pic" />';?>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img">
+                                            <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user">';?></div>
+                                            <div class="u-text">
+                                                <h4>Steave Jobs</h4>
+                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
+                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Language -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                        </li>
+                    </ul>
                 </div>
-                <span class="notification-pie-chart pull-right" data-percent="78">
-                  <span class="percent"></span>
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="task-info clearfix">
-                <div class="desc pull-left">
-                  <h5>Payment collection</h5>
-                  <p>87% , Deadline  12 June’13</p>
-                </div>
-                <span class="notification-pie-chart pull-right" data-percent="60">
-                  <span class="percent"></span>
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="task-info clearfix">
-                <div class="desc pull-left">
-                  <h5>Target Sell</h5>
-                  <p>33% , Deadline  12 June’13</p>
-                </div>
-                <span class="notification-pie-chart pull-right" data-percent="90">
-                  <span class="percent"></span>
-                </span>
-              </div>
-            </a>
-          </li>
-
-          <li class="external">
-            <a href="#">See All Tasks</a>
-          </li>
-        </ul>
-      </li>
-      <!-- settings end -->
-      <!-- inbox dropdown start-->
-      <li id="header_inbox_bar" class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-          <i class="fa fa-envelope-o"></i>
-          <span class="badge bg-important">4</span>
-        </a>
-        <ul class="dropdown-menu extended inbox">
-          <li>
-            <p class="red">You have 4 Mails</p>
-          </li>
-          <li>
-            <a href="#">
-              <span class="photo">
-                <img src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/avatar-mini.jpg'?>" alt="">
-              </span>
-              <span class="subject">
-                <span class="from">Jonathan Smith</span>
-                <span class="time">Just now</span>
-              </span>
-              <span class="message">
-                Hello, this is an example msg.
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span class="photo"><img alt="avatar" src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/avatar-mini-2.jpg'?>">
-              </span>
-              <span class="subject">
-                <span class="from">Jane Doe</span>
-                <span class="time">2 min ago</span>
-              </span>
-              <span class="message">
-                Nice admin template
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span class="photo"><img alt="avatar" src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/avatar-mini-3.jpg'?>"></span>
-              <span class="subject">
-                <span class="from">Tasi sam</span>
-                <span class="time">2 days ago</span>
-              </span>
-              <span class="message">
-                This is an example msg.
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span class="photo"><img alt="avatar" src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/avatar-mini.jpg'?>"></span>
-              <span class="subject">
-                <span class="from">Mr. Perfect</span>
-                <span class="time">2 hour ago</span>
-              </span>
-              <span class="message">
-                Hi there, its a test
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">See all messages</a>
-          </li>
-        </ul>
-      </li>
-      <!-- inbox dropdown end -->
-      <!-- notification dropdown start-->
-      <li id="header_notification_bar" class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-          <i class="fa fa-bell-o"></i>
-          <span class="badge bg-warning">3</span>
-        </a>
-        <ul class="dropdown-menu extended notification">
-          <li>
-            <p>Notifications</p>
-          </li>
-          <li>
-            <div class="alert alert-info clearfix">
-              <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-              <div class="noti-info">
-                <a href="#"> Server #1 overloaded.</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="alert alert-danger clearfix">
-              <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-              <div class="noti-info">
-                <a href="#"> Server #2 overloaded.</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="alert alert-success clearfix">
-              <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-              <div class="noti-info">
-                <a href="#"> Server #3 overloaded.</a>
-              </div>
-            </div>
-          </li>
-
-        </ul>
-      </li>
-      <!-- notification dropdown end -->
-    </ul>
-    <!--  notification end -->
-  </div>
-  <div class="top-nav clearfix">
-    <!--search & user info start-->
-    <ul class="nav pull-right top-menu">
-      <li>
-        <input type="text" class="form-control search" placeholder=" Search">
-      </li>
-      <!-- user login dropdown start-->
-      <li class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-          <img alt="" src="<?php echo $CFG->wwwroot.'/theme/defaultlms/images/avatar1_small.jpg'?>">
-          <span class="username"><?php echo $USER->firstname.' '.$USER->lastname;?></span>
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu extended logout">
-          <li><a href="<?php echo $CFG->wwwroot.'/user/profile.php?id='.$USER->id;?>"><i class=" fa fa-suitcase"></i>Profile</a></li>
-          <li><a href="<?php echo $CFG->wwwroot.'/admin/search.php';?>"><i class="fa fa-cog"></i> Settings</a></li>
-          <li><a href="<?php echo $CFG->wwwroot.'/login/logout.php?sesskey='.sesskey();?>"> <i class="fa fa-key" aria-hidden="true"></i> Log out</a>
-          </li>
-        </ul>
-      </li>
-      <!-- user login dropdown end -->
-      <li>
-        <div class="toggle-right-box">
-          <div class="fa fa-bars"></div>
-        </div>
-      </li>
-    </ul>
-    <!--search & user info end-->
-  </div>
-</header>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->s
+        <!-- ============================================================== -->

@@ -124,7 +124,7 @@ $(function () {
             label: {
                 show: false
               },
-            title: "Our visitor",
+            title: "Courses",
             width:20,
             
         },
