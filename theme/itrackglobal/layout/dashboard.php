@@ -1,7 +1,9 @@
 <?php
+defined('MOODLE_INTERNAL') || die();
+include_once($CFG->dirroot."/theme/itrackglobal/lib.php"); 
 $standardlayout = (empty($PAGE->theme->settings->layout)) ? false : $PAGE->theme->settings->layout;
 $haslogo = (!empty($PAGE->theme->settings->logo));
-global $CFG, $USER;
+global $CFG, $USER, $DB;
 //include_once("$CFG->dirroot/my/locallib.php");
 if (right_to_left()) {
     $regionbsid = 'region-bs-main-and-post';
@@ -42,11 +44,15 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
 
 <!-- Custom CSS -->
     <link href="'.$CFG->wwwroot.'/theme/itrackglobal/css/style.css" rel="stylesheet">
+    <script src="'.$CFG->wwwroot.'/theme/itrackglobal/js/twitter.js"></script>
+    <script src="'.$CFG->wwwroot.'/theme/itrackglobal/js/custom.js"></script>
 
 <!-- You can change the theme colors from here -->
-    <link href="'.$CFG->wwwroot.'/theme/itrackglobal/css/colors/blue.css" id="theme" rel="stylesheet">';
+    <link href="'.$CFG->wwwroot.'/theme/itrackglobal/css/colors/blue.css" id="theme" rel="stylesheet">
+    ';
 ?>
-<?php echo $OUTPUT->standard_head_html(); ?>
+<?php echo $OUTPUT->standard_head_html(); 
+?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -189,7 +195,7 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                 <!-- Row -->
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
-                        <div class="card">
+                        <div class="card card earning-widget">
                             <div class="card-header">
                                 <div class="card-actions">
                                     <a class="" data-action="collapse"><i class="ti-minus"></i></a>
@@ -199,56 +205,29 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                                 <h4 class="card-title m-b-0">Course Progress</h4>
                             </div>
                             <div class="card-body">  
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3>86%</h3>
-                                        <h6 class="card-subtitle">Product X</h6></div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3>40%</h3>
-                                        <h6 class="card-subtitle">Product D</h6></div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 40%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3>56%</h3>
-                                        <h6 class="card-subtitle">Product A</h6></div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3>26%</h3>
-                                        <h6 class="card-subtitle">Product B</h6></div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-inverse" role="progressbar" style="width: 26%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3>40%</h3>
-                                        <h6 class="card-subtitle">Product C</h6></div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php
+                                $coursesprogress = get_my_courses_progress();
+                                $color_arr = array('info','success','danger','warning');
+                                if($coursesprogress){                                    
+                                    foreach ($coursesprogress as $crsid => $crs_stat) {
+                                        shuffle($color_arr);                                        
+                                        foreach ($color_arr as $ck => $cv) {
+                                            $colorclass = $cv;
+                                        }
+                                        $crs = $DB->get_record('course',array('id'=>$crsid));
+                                        echo '<div class="row">
+                                                    <div class="col-12">
+                                                        <h3>'.$crs_stat["progress"].'%</h3>
+                                                        <h6 class="card-subtitle">'.ucwords($crs->fullname).'</h6></div>
+                                                    <div class="col-12">
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-'.$colorclass.'" role="progressbar" style="width: '.$crs_stat["progress"].'%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>';
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -286,34 +265,38 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                                 <h4 class="card-title m-b-0">Leaderboard</h4>
                             </div>
                             <div class="card-body b-t collapse show">
+                                <?php
+                                    $top_scorers = $DB->get_records_sql("SELECT userid,lvl,xp from {block_xp} order by xp desc LIMIT 0,5");
+                                ?>
                                 <table class="table v-middle no-border">
-                                    <?php echo '<tbody>
-                                        <tr>
-                                            <td style="width:40px"><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" width="50" class="img-circle" alt="logo"></td>
-                                            <td>Andrew</td>
-                                            <td align="right"><span class="label label-light-info">2300 Points</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/2.jpg" width="50" class="img-circle" alt="logo"></td>
-                                            <td>Kristeen</td>
-                                            <td align="right"><span class="label label-light-success">3300 Points</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/3.jpg" width="50" class="img-circle" alt="logo"></td>
-                                            <td>Dany John</td>
-                                            <td align="right"><span class="label label-light-primary">4300 Points</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" width="50" class="img-circle" alt="logo"></td>
-                                            <td>Chris gyle</td>
-                                            <td align="right"><span class="label label-light-warning">5300 Points</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/5.jpg" width="50" class="img-circle" alt="logo"></td>
-                                            <td>Prabhas</td>
-                                            <td align="right"><span class="label label-light-danger">4567 Points</span></td>
-                                        </tr>
-                                    </tbody>';?>
+                                    <tbody>
+                                    <?php 
+                                        $image_arr = array(1,2,3,4,5);
+                                        $color_arr = array('label label-light-success','label label-light-primary','label label-light-warning','label label-light-danger','label label-light-info');
+                                        foreach ($top_scorers as $userid => $scores) {
+                                            $user_arr = $DB->get_record('user',array('id'=>$userid),'id,firstname');
+                                            /*<img src="'.$CFG->wwwroot.'/user/pix.php?file=/'.$user_arr->id.'/f1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$user_arr->firstname.'" width="50" class="img-circle">*/
+                                            shuffle($image_arr);
+                                            shuffle($color_arr);
+                                            foreach ($image_arr as $ik => $iv) {
+                                                $srcid = $iv;
+                                            }
+                                            foreach ($color_arr as $ck => $cv) {
+                                                $colorclass = $cv;
+                                            }
+                                            echo '<tr>                                                    
+                                                    <td>
+                                                        <img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/'.$srcid.'.jpg" width="50" class="img-circle" alt="logo">
+                                                    </td>
+                                                    <td style="padding:0px">'.$user_arr->firstname.'</td>
+                                                    <td align="right">
+                                                        <span class="showpoints '.$colorclass.'">'.$scores->xp.' Points</span>
+                                                    </td>
+                                                    <td align="right"><span style="height: 27px;line-height: 1.85;" class="label label-rounded bg-danger" data-toggle="tooltip_custom" title="level">'.$scores->lvl.' </span></td>
+                                                  </tr>';
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -386,14 +369,6 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                                                 <td><span class="label label-warning">High</span></td>
                                                 <td>$12.9K</td>
                                             </tr>
-                                            <tr>
-                                                <td><span class="round round-danger">N</span></td>
-                                                <td>
-                                                    <h6>Johnathan</h6><small class="text-muted">Graphic</small></td>
-                                                <td>Digital Agency</td>
-                                                <td><span class="label label-info">High</span></td>
-                                                <td>$2.6K</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -403,14 +378,16 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                     <div class="col-lg-4">
                         <!-- Column -->
                         <div class="card"> 
-                        <?php echo '<img class="" src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/background/profile-bg.jpg" alt="Card image cap">';?>
+                            <div class="resp-container">
+                                <iframe class="resp-iframe" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftransneuron&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=false&hide_cover=false&show_facepile=true&appId=2301328596820009" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                            <div>
+                                <!-- <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+                                <script type="IN/CompanyProfile" data-id="3855850" data-format="inline" data-related="false"></script>     -->                           
+                            </div>
                             <div class="card-body little-profile text-center">
-                                <div class="pro-img">
-                                <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user">';?>
-                                </div>
-                                <h3 class="m-b-0">Angela Dominic</h3>
-                                <p>Web Designer &amp; Developer</p>
-                                <p><small>Lorem ipsum dolor sit amet, this is a consectetur adipisicing elit</small></p> <a href="javascript:void(0)" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded">Follow</a>
+                                
+                                <a target="_new" href="https://www.facebook.com/transneuron/?ref=nf&hc_ref=ARQ18KovCWjlbhKCi4SWrcmwWnzXNhznAXMZQY4U3Cp2izZMvd6_Sp4szi9mWpeqW_o" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded">Follow</a>
                                 <div class="row text-center m-t-20">
                                     <div class="col-lg-4 col-md-4 m-t-20">
                                         <h3 class="m-b-0 font-light">1099</h3><small>Articles</small></div>
@@ -430,73 +407,20 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Recent Comments</h4>
-                                <h6 class="card-subtitle">Latest Comments on users from Material</h6> </div>
+                            <div class="card-body" style="padding-bottom: 0px">
+                                <h4 class="card-title">Recent Tweets</h4>
+                                <h6 class="card-subtitle">Follow us and get the latest updates</h6> </div>
                             <!-- ============================================================== -->
                             <!-- Comment widgets -->
                             <!-- ============================================================== -->
                             <div class="comment-widgets">
                                 <!-- Comment Row -->
-                                <div class="d-flex flex-row comment-row">
-                                    <div class="p-2"><span class="round">
-                                    <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user" width="50">';?>
-                                    </span></div>
-                                    <div class="comment-text w-100">
-                                        <h5>James Anderson</h5>
-                                        <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting industry.</p>
-                                        <div class="comment-footer"> <span class="text-muted pull-right">April 14, 2016</span> <span class="label label-info">Pending</span> <span class="action-icons">
-                                                    <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                    <a href="javascript:void(0)"><i class="ti-check"></i></a>
-                                                    <a href="javascript:void(0)"><i class="ti-heart"></i></a>    
-                                                </span> </div>
-                                    </div>
-                                </div>
-                                <!-- Comment Row -->
-                                <div class="d-flex flex-row comment-row active">
-                                    <div class="p-2"><span class="round">
-                                    <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/2.jpg" alt="user" width="50">';?>
-                                    </span></div>
-                                    <div class="comment-text active w-100">
-                                        <h5>Michael Jorden</h5>
-                                        <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting industry..</p>
-                                        <div class="comment-footer "> <span class="text-muted pull-right">April 14, 2016</span> <span class="label label-light-success">Approved</span> <span class="action-icons active">
-                                                    <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                    <a href="javascript:void(0)"><i class="icon-close"></i></a>
-                                                    <a href="javascript:void(0)"><i class="ti-heart text-danger"></i></a>    
-                                                </span> </div>
-                                    </div>
-                                </div>
-                                <!-- Comment Row -->
-                                <div class="d-flex flex-row comment-row">
-                                    <div class="p-2"><span class="round">
-                                    <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/3.jpg" alt="user" width="50">';?>
-                                    </span></div>
-                                    <div class="comment-text w-100">
-                                        <h5>Johnathan Doeting</h5>
-                                        <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting industry.</p>
-                                        <div class="comment-footer"> <span class="text-muted pull-right">April 14, 2016</span> <span class="label label-danger">Rejected</span> <span class="action-icons">
-                                                    <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                    <a href="javascript:void(0)"><i class="ti-check"></i></a>
-                                                    <a href="javascript:void(0)"><i class="ti-heart"></i></a>    
-                                                </span> </div>
-                                    </div>
-                                </div>
-                                <!-- Comment Row -->
-                                <div class="d-flex flex-row comment-row">
-                                    <div class="p-2"><span class="round">
-                                    <?php echo '<img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user" width="50">';?>
-                                    </span></div>
-                                    <div class="comment-text w-100">
-                                        <h5>James Anderson</h5>
-                                        <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting industry..</p>
-                                        <div class="comment-footer"> <span class="text-muted pull-right">April 14, 2016</span> <span class="label label-info">Pending</span> <span class="action-icons">
-                                                        <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                        <a href="javascript:void(0)"><i class="ti-check"></i></a>
-                                                        <a href="javascript:void(0)"><i class="ti-heart"></i></a>    
-                                                    </span> </div>
-                                    </div>
-                                </div>
+                                <div id="example1" class="d-flex flex-row comment-row">
+                                    
+                                </div> 
+                                <div id="example2" class="d-flex flex-row comment-row">
+                                    
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -522,22 +446,40 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                                                     <form>
                                                         <div class="form-group">
                                                             <label>Task name</label>
-                                                            <input type="text" class="form-control" placeholder="Enter Task Name"> </div>
+                                                            <input type="text" id="todotext" class="form-control" placeholder="Enter Task Name" required> </div>
                                                         <div class="form-group">
                                                             <label>Assign to</label>
-                                                            <select class="custom-select form-control pull-right">
-                                                                <option selected="">Sachin</option>
-                                                                <option value="1">Sehwag</option>
-                                                                <option value="2">Pritam</option>
-                                                                <option value="3">Alia</option>
-                                                                <option value="4">Varun</option>
+                                                            <?php
+                                                                $user_arr = $DB->get_records('group_to_student',array());
+                                                                foreach ($user_arr as $uk => $uv) {
+                                                                    $grpups[$uv->groupid][] = $uv->studentid;
+                                                                }
+                                                                foreach ($grpups as $g1k => $g1v) {
+                                                                    foreach ($g1v as $g2k => $g2v) {                      
+                                                                        $username = $DB->get_record('user',array('id'=>$g2v),'id,firstname,lastname');
+                                                                        $userss[$g2v] = $username->firstname.' '.$username->lastname;
+                                                                    }
+                                                                }
+                                                            ?>
+                                                            <select id="selecteduser" class="custom-select form-control pull-right">
+                                                                <?php
+                                                                $options = '';
+                                                                foreach ($userss as $gk => $gv) {
+                                                                    if($gk == $USER->id){
+                                                                        $options .= '<option value="'.$gk.'" selected="">'.$gv.'</option>';
+                                                                    }else{
+                                                                        $options .= '<option value="'.$gk.'" ="">'.$gv.'</option>';
+                                                                    }
+                                                                }
+                                                                echo $options;
+                                                                ?>
                                                             </select>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addTask()">Submit</button>
                                                 </div>
                                             </div>
                                             <!-- /.modal-content -->
@@ -545,68 +487,30 @@ echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$CFG->wwwroot.'/th
                                         <!-- /.modal-dialog -->
                                     </div>
                                     <!-- /.modal -->
-                                    <ul class="list-task todo-list list-group m-b-0" data-role="tasklist">
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputSchedule" name="inputCheckboxesSchedule">
-                                                <label for="inputSchedule" class=""> <span>Schedule meeting with</span> </label>
-                                            </div>
-                                            <?php echo '<ul class="assignedto">
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/2.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Jessica"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
-                                            </ul>';?>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputCall" name="inputCheckboxesCall">
-                                                <label for="inputCall" class=""> <span>Give Purchase report to</span> <span class="label label-danger">Today</span> </label>
-                                            </div>
-                                           <?php echo '<ul class="assignedto">
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
-                                            </ul>';?>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputBook" name="inputCheckboxesBook">
-                                                <label for="inputBook" class=""> <span>Book flight for holiday</span> </label>
-                                            </div>
-                                            <div class="item-date"> 26 jun 2017</div>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputForward" name="inputCheckboxesForward">
-                                                <label for="inputForward" class=""> <span>Forward all tasks</span> <span class="label label-warning">2 weeks</span> </label>
-                                            </div>
-                                            <div class="item-date"> 26 jun 2017</div>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputRecieve" name="inputCheckboxesRecieve">
-                                                <label for="inputRecieve" class=""> <span>Recieve shipment</span> </label>
-                                            </div>
-                                            <div class="item-date"> 26 jun 2017</div>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputpayment" name="inputCheckboxespayment">
-                                                <label for="inputpayment" class=""> <span>Send payment today</span> </label>
-                                            </div>
-                                            <div class="item-date"> 26 jun 2017</div>
-                                        </li>
-                                        <li class="list-group-item" data-role="task">
-                                            <div class="checkbox checkbox-info">
-                                                <input type="checkbox" id="inputForward2" name="inputCheckboxesd">
-                                                <label for="inputForward2" class=""> <span>Important tasks</span> <span class="label label-success">2 weeks</span> </label>
-                                            </div>
-                                            <?php echo '<ul class="assignedto">
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Assign to Steave"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/2.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Assign to Jessica"></li>
-                                                <li><img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Assign to Selina"></li>
-                                            </ul>';?>
-                                        </li>
+                                    <ul class="list-task todo-list list-group m-b-0" data-role="tasklist" id="tasklistst_users">
+                                        <?php
+                                            global $DB,$USER;
+                                            $tasklist_arr = $DB->get_records('block_todo',array('usermodified'=>$USER->id),'id,timecreated,todotext,done');
+                                            foreach ($tasklist_arr as $tk => $tv) {
+                                                echo '<li class="list-group-item" data-role="task" id="taskli'.$tk.'">
+                                                            <div class="checkbox checkbox-info">
+                                                                <input type="checkbox" id="inputSchedule'.$tk.'" name="inputCheckboxesSchedule'.$tk.'" onclick="toggleCheckbox(this)" value="'.$tk.'">
+                                                                <label for="inputSchedule'.$tk.'" class=""> <span>'.$tv->todotext.'</span> </label>
+                                                                <button data-control="delete" type="button" class="close" aria-label="Delete" id="'.$tk.'" onclick="deleteTask(this.id)">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <ul class="assignedto">
+                                                                <li><img src="'.$CFG->wwwroot.'/user/pix.php?file=/'.$USER->id.'/f1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$USER->firstname.'"></li>';
+                                                                if($DB->record_exists('todo_assigneee',array('taskid'=>$tk))){
+                                                                    $other_user = $DB->get_record('todo_assigneee',array('taskid'=>$tk),'id,assignedto');
+                                                                    $ou = $DB->get_record('user',array('id'=>$other_user->assignedto),'id,firstname');
+                                                                    echo '<li><img src="'.$CFG->wwwroot.'/user/pix.php?file=/'.$other_user->assignedto.'/f1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$ou->firstname.'"></li>';
+                                                                }
+                                                            echo '</ul>
+                                                        </li>';
+                                            }
+                                        ?>                                        
                                     </ul>
                                 </div>
                             </div>

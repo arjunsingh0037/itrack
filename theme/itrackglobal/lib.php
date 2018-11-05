@@ -22,6 +22,8 @@
  * @copyright 2014 redPIthemes
  *
  */
+use core_completion\progress;
+require_once($CFG->libdir . '/completionlib.php');
 
 function theme_itrackglobal_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     if ($context->contextlevel == CONTEXT_SYSTEM) {
@@ -623,3 +625,35 @@ function theme_itrackglobal_set_background_repeat($css, $repeat, $size) {
     $page->requires->jquery_plugin('jquery.bxslider', 'theme_itrackglobal'); 
     $page->requires->jquery_plugin('jquery.slimscroll', 'theme_itrackglobal'); 
 }*/
+function get_my_courses_progress(){
+    global $CFG,$DB,$USER;
+    if (empty($CFG->navsortmycoursessort)) {
+        $sort = 'visible DESC, sortorder ASC';
+    } else {
+        $sort = 'visible DESC, '.$CFG->navsortmycoursessort.' ASC';
+    }
+
+    $courses = enrol_get_my_courses('*', $sort);
+    $coursesprogress = [];
+    //print_object($courses);
+    foreach ($courses as $course) {
+
+        $completion = new \completion_info($course);
+
+        // First, let's make sure completion is enabled.
+        if (!$completion->is_enabled()) {
+            continue;
+        }
+
+        $percentage = progress::get_course_progress_percentage($course);
+        //print_object($percentage);
+        if (!is_null($percentage)) {
+            $percentage = floor($percentage);
+        }
+
+        $coursesprogress[$course->id]['completed'] = $completion->is_course_complete($USER->id);
+        $coursesprogress[$course->id]['progress'] = $percentage;
+       
+    }
+    return $coursesprogress;
+}

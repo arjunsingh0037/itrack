@@ -98,6 +98,13 @@ $THEME->layouts = array(
         'defaultregion' => 'side-post',
         'options' => array('langmenu'=>true),
     ),
+    // My dashboard page.
+    'customprofile' => array(
+        'file' => 'customprofile.php',
+        'regions' => array('side-post', 'footer-left', 'footer-middle', 'footer-right'),
+        'defaultregion' => 'side-post',
+        'options' => array('langmenu'=>true),
+    ),
     // My public page.
     'mypublic' => array(
         'file' => 'columns3.php',

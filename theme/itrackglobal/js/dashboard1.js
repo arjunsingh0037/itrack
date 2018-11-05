@@ -219,3 +219,19 @@ $(function () {
     
     
 });
+function updateProfile(userid){
+    var user_name = $("#user_name").val();
+    var user_email = $("#user_email").val();
+    var user_phone = $("#user_phone").val();
+    var user_country = $("#user_country").val();
+    
+    $.ajax({
+        url: '../theme/itrackglobal/js/updateUserajax.php',
+        dataType: 'json',
+        type: 'get',
+        data: {uid:userid,uname:user_name,uemail:user_email,uphone:user_phone,ucountry:user_country},
+        success:function(response){
+              swal("Success!", "User record updated", "success");
+        }
+    });
+}

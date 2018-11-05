@@ -12,10 +12,29 @@ global $DB,$CFG,$USER;
                     <!-- User profile image -->
                     <div class="profile-img"> <img src="'.$CFG->wwwroot.'/theme/itrackglobal/assets/images/users/profile.png" alt="user" /> </div>';?>
                     <!-- User profile text-->
-                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><?php echo $USER->firstname.' '.$USER->lastname;?></a>
-                        <div class="dropdown-menu animated flipInY"> <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                            <div class="dropdown-divider"></div> <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> </div>
+                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><?php echo $USER->firstname;?></a>
+                        <div class="dropdown-menu animated flipInY"> 
+                            <a href="<?php echo $CFG->wwwroot.'/user/profile.php?id='.$USER->id;?>" class="dropdown-item">
+                                <i class="ti-user"></i> My Profile
+                            </a> 
+                            <a href="<?php echo $CFG->wwwroot.'/calendar/view.php?view=month';?>" class="dropdown-item">
+                                <i class="ti-wallet"></i> My Calender
+                            </a> 
+                            <a href="<?php echo $CFG->wwwroot.'/message/index.php';?>" class="dropdown-item">
+                                <i class="ti-email"></i> My Chats
+                            </a>
+                            
+                            <div class="dropdown-divider"></div> 
+
+                            <a href="#" class="dropdown-item">
+                                <i class="ti-settings"></i> Account Setting
+                            </a>
+                            
+                            <div class="dropdown-divider"></div> 
+                            
+                            <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout
+                            </a> 
+                        </div>
                     </div>
                 </div>
                 <!-- End User profile text-->

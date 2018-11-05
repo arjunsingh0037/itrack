@@ -1,16 +1,16 @@
 <style type="text/css">
 	@font-face {
 	font-family:'FontAwesome';
-	src: url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/fontawesome-webfont.eot');
-	src: url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/fontawesome-webfont.woff') format('woff'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/fontawesome-webfont.ttf') format('truetype'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+	src: url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/fontawesome-webfont.eot');
+	src: url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/fontawesome-webfont.woff') format('woff'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/fontawesome-webfont.ttf') format('truetype'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
 	font-weight:normal;
 	font-style:normal;
 	}
 	@font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.eot');
-  src: url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.woff') format('woff'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.eot');
+  src: url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.woff') format('woff'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 </style>
 
@@ -18,8 +18,8 @@
 <style type="text/css">
 	@font-face {
 	font-family:'open_sansregular';
-	src:url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/OpenSans-Regular-webfont.eot');
-	src:url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/OpenSans-Regular-webfont.woff') format('woff'),url('<?php echo $CFG->wwwroot ?>/theme/defaultlms/fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+	src:url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/OpenSans-Regular-webfont.eot');
+	src:url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/OpenSans-Regular-webfont.woff') format('woff'),url('<?php echo $CFG->wwwroot ?>/theme/itrackglobal/fonts/OpenSans-Regular-webfont.ttf') format('truetype');
 	font-weight:normal;
 	font-style:normal;
 	}

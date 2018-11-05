@@ -111,13 +111,13 @@ $(function () {
     // ============================================================== 
     $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+    });
     // ============================================================== 
     //Popover
     // ============================================================== 
     $(function () {
             $('[data-toggle="popover"]').popover()
-        })
+    });
     // ============================================================== 
     // Sidebarmenu
     // ============================================================== 
@@ -230,3 +230,53 @@ $(function () {
         
     
 });
+
+function deleteTask(id){
+    $.ajax({
+        url: '../theme/itrackglobal/js/deletetaskajax.php',
+        dataType: 'json',
+        type: 'post',
+        data: {taskid:id},
+        success:function(response){
+              //$("#gpstulist").html(response);
+              $('#taskli'+id).remove();
+        }
+    });
+}
+function addTask(){
+    var todotext = $('#todotext').val();
+    var userid = $('#selecteduser').val();
+    $.ajax({
+        url: '../theme/itrackglobal/js/addtaskajax.php',
+        dataType: 'json',
+        type: 'get',
+        data: {taskname:todotext,uid:userid},
+        success:function(response){
+              //$("#gpstulist").html(response);
+              $('#tasklistst_users').append(response);
+              //$('#taskli'+id).remove();
+        }
+    });
+}
+function toggleCheckbox(element){
+   var id = $('#'+element.id).val();
+   //$("label#inputSchedule"d).addClass("strikethrough");
+   if($('label[for="inputSchedule'+id+'"]').hasClass("strikethrough")){
+        $('label[for="inputSchedule'+id+'"]').removeClass("strikethrough");
+   }else{
+        $('label[for="inputSchedule'+id+'"]').addClass("strikethrough");
+   }
+   $.ajax({
+        url: '../theme/itrackglobal/js/updatetaskajax.php',
+        dataType: 'json',
+        type: 'post',
+        data: {taskid:id},
+        success:function(response){
+              //$("#gpstulist").html(response);
+              //$('#taskli'+id).remove();
+        }
+    });
+ }
+ $(function () {
+    $('[data-toggle="tooltip_custom"]').tooltip(); 
+ });
